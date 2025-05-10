@@ -1,0 +1,53 @@
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import PhoneInput from "./PhoneInput";
+import Button from "../common/Button";
+
+const AuthForm = () => {
+  const [phone, setPhone] = useState("");
+  const history = useHistory();
+
+  const handleChange = (e) => {
+    setPhone(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Phone Number:", phone);
+    history.push("/verify-code");
+  };
+
+  return (
+    <div className="auth-form flex flex-col items-center justify-center min-h-screen bg-white px-4">
+      <img
+        src="/public/assets/icons/logo-green.svg"
+        alt="لوگو"
+        className="w-36 h-36 sm:w-36 sm:h-36 mb-10"
+      />
+      <h1 className="text-2xl font-bold text-gray-800 mt-10 mb-5 text-center">
+        به دنیای سبز خود خوش آمدید!
+      </h1>
+      <p className="text-sm text-gray-500 mb-12 text-center">
+        با ثبت‌نام، سریع‌تر و هوشمندانه‌تر از گیاهانت مراقبت کن
+      </p>
+      <form onSubmit={handleSubmit} className="w-full max-w-sm">
+        <PhoneInput value={phone} onChange={handleChange} />
+        <Button
+          type="submit"
+          className="bg-color text-white hover:bg-green-800 w-full mt-5"
+        >
+          ادامه
+        </Button>
+      </form>
+      <p className="mt-20 text-xs text-gray-400 text-center">
+        ثبت‌نام و ورود شما به منزله قبول{" "}
+        <a href="#" className="underline">
+          قوانین و شرایط
+        </a>{" "}
+        است
+      </p>
+    </div>
+  );
+};
+
+export default AuthForm;
