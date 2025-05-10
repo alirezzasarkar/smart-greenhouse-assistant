@@ -1,5 +1,11 @@
+import LoadingPage from "./pages/Loading";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <LoadingPage />
+    </>
+  );
 }
 
 export default App;
