@@ -1,37 +1,123 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, Outlet } from "react-router-dom";
 
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
   const { pathname } = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const tabs = [
     {
-      to: "/smart-consultant",
-      label: "مشاوره هوشمند",
-      iconPath:
-        "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z",
+      to: "/",
+      label: "تشخیص نوع و خانواده گیاه",
+      iconSrc: "/public/assets/icons/menu-icon/1.svg",
+    },
+    {
+      to: "/",
+      label: "تشخیص انواع آفات و راه های درمانی آن",
+      iconSrc: "/public/assets/icons/menu-icon/2.svg",
+    },
+    {
+      to: "/",
+      label: "دریافت اخبار و هواشناسی بر اساس لوکیشن",
+      iconSrc: "/public/assets/icons/menu-icon/3.svg",
+    },
+    {
+      to: "/",
+      label: "تشخیص کود مناسب گیاه و زمان کود دهی",
+      iconSrc: "/public/assets/icons/menu-icon/4.svg",
+    },
+    {
+      to: "/",
+      label: "تشخیص آب و دما مناسب گیاه",
+      iconSrc: "/public/assets/icons/menu-icon/5.svg",
+    },
+    {
+      to: "/",
+      label: "سیستم هشدار دهی هنگام تغییرات آب و هوایی",
+      iconSrc: "/public/assets/icons/menu-icon/6.svg",
+    },
+  ];
+
+  const menu = [
+    {
+      to: "/test2",
+      label: "پروفایل کاربری",
+      iconSrc: "/public/assets/icons/profile-1.svg",
+      activeIconSrc: "/public/assets/icons/profile.svg",
     },
     {
       to: "/",
       label: "صفحه اصلی",
-      iconPath: "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z",
+      iconSrc: "/public/assets/icons/home-1.svg",
+      activeIconSrc: "/public/assets/icons/home.svg",
     },
     {
-      to: "/profile",
-      label: "پروفایل کاربری",
-      iconPath:
-        "M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z",
+      to: "/test1",
+      label: "مشاوره هوشمند",
+      iconSrc: "/public/assets/icons/consultant-1.svg",
+      activeIconSrc: "/public/assets/icons/consultant.svg",
     },
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen bg-gray-50 relative">
+      <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
+        <button
+          className="p-2 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-300"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          <img
+            src="/public/assets/icons/menu.svg"
+            alt="Menu Icon"
+            className="w-8 h-8"
+          />
+        </button>
+        <img
+          src="/public/assets/icons/logo-green.svg"
+          alt="Logo"
+          className="h-8 w-auto"
+        />
+      </header>
+
+      {isMenuOpen && (
+        <div className="absolute top-0 left-0 w-full h-full  shadow-lg z-50 backdrop-blur-3xl">
+          <button
+            className="absolute top-2 right-4 p-2 cursor-pointer"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <img
+              src="/public/assets/icons/close.svg"
+              alt="Menu Icon"
+              className="w-8 h-8"
+            />
+          </button>
+          <ul className="mt-30 space-y-4 px-4">
+            {tabs.map(({ to, label, iconSrc }) => (
+              <li
+                key={to}
+                className="relative mb-7 hover:bg-gray-100 flex rounded-md items-center"
+              >
+                <img src={iconSrc} alt={label} className="w-6 h-6 mr-2" />
+                <Link
+                  to={to}
+                  className="block py-2 px-4 text-gray-700  flex-1"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {label}
+                </Link>
+                <div className="absolute -bottom-2 left-0 w-full h-0.25 bg-line-color"></div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div key={pathname} className="flex-grow overflow-auto">
-        {children}
+        <Outlet />
       </div>
 
-      <nav className="relative w-full max-w-md mx-auto bg-menu shadow-lg h-16 flex justify-around items-start">
-        {tabs.map(({ to, label, iconPath }) => {
+      <nav className="relative w-full mt-10 max-w-md mx-auto bg-menu h-16 flex rounded-t-4xl justify-around items-start pb-7">
+        {menu.map(({ to, label, iconSrc, activeIconSrc }) => {
           const isActive = pathname === to;
           return (
             <Link
@@ -43,22 +129,20 @@ const MainLayout = ({ children }) => {
                 className={
                   `transition-all duration-200 flex items-center justify-center ` +
                   (isActive
-                    ? "relative -mt-6 w-12 h-12 bg-color text-white rounded-full"
+                    ? "relative -mt-4 w-12 h-12 bg-color text-white rounded-full"
                     : "mt-2 w-6 h-6 text-gray-400")
                 }
               >
-                <svg
+                <img
+                  src={isActive ? activeIconSrc : iconSrc}
+                  alt={label}
                   className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d={iconPath} />
-                </svg>
+                />
               </div>
               <span
                 className={
                   `block mt-2 text-xs transition-colors duration-200 ` +
-                  (isActive ? "text-green-500 font-medium" : "text-gray-500")
+                  (isActive ? "text-color font-medium" : "text-gray-500")
                 }
               >
                 {label}
