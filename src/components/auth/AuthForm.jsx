@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PhoneInput from "./PhoneInput";
 import Button from "../common/Button";
 
 const AuthForm = () => {
   const [phone, setPhone] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setPhone(e.target.value);
@@ -14,7 +14,7 @@ const AuthForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Phone Number:", phone);
-    history.push("/verify-code");
+    navigate("/verify-code");
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import OnboardingIndicator from "./OnboardingIndicator";
 
@@ -13,10 +13,10 @@ const WelcomeSlide = ({
   currentStep,
   totalSteps,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSkip = () => {
-    history.push("/signup-login");
+    navigate("/signup-login");
   };
 
   return (

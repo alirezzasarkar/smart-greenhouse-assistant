@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import WelcomeSlide from "../components/onboarding/WelcomeSlide";
 
 const Onboarding = () => {
   const [step, setStep] = useState(0);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const slides = [
     {
@@ -34,7 +34,7 @@ const Onboarding = () => {
     if (step < slides.length - 1) {
       setStep(step + 1);
     } else {
-      history.push("/signup-login");
+      navigate("/signup-login");
     }
   };
 

@@ -25,13 +25,23 @@ body {
 .bg-color {
     background-color: #05A86B;
 }
-
+.bg-line-color {
+    background-color: #05a86c94;
+}
 .bg-menu {
     background-color: #ECF8F4;
 }
 
 .bg-color-btn{
     background-color: #ECF8F4;
+}
+
+.bg-feature-1{
+    background-color: #ECF8EE;
+}
+
+.bg-feature-2{
+    background-color: #DCE8D6;
 }
 
 .text-color {

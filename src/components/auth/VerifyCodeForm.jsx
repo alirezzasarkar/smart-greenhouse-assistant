@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import VerifyCodeInput from "./VerifyCodeInput";
 import Button from "../common/Button";
 
 const VerifyCodeForm = () => {
   const [code, setCode] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (value) => {
     setCode(value);
@@ -14,7 +14,7 @@ const VerifyCodeForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Verification Code:", code);
-    history.push("/dashboard"); // هدایت به داشبورد پس از تأیید
+    navigate("/dashboard");
   };
 
   return (
