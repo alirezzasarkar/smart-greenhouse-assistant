@@ -7,7 +7,7 @@ const MainLayout = () => {
 
   const tabs = [
     {
-      to: "/",
+      to: "/plant-detection",
       label: "تشخیص نوع و خانواده گیاه",
       iconSrc: "/public/assets/icons/menu-icon/1.svg",
     },
@@ -60,8 +60,8 @@ const MainLayout = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50 relative">
-      <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
+    <div className="flex flex-col h-screen relative">
+      <header className="flex items-center justify-between px-4 py-2 bg-white">
         <button
           className="p-2 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-300"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -80,7 +80,7 @@ const MainLayout = () => {
       </header>
 
       {isMenuOpen && (
-        <div className="absolute top-0 left-0 w-full h-full  shadow-lg z-50 backdrop-blur-3xl">
+        <div className="absolute top-0 left-0 w-full h-full bg-white-50 shadow-lg z-50 backdrop-blur-xl">
           <button
             className="absolute top-2 right-4 p-2 cursor-pointer"
             onClick={() => setIsMenuOpen(false)}

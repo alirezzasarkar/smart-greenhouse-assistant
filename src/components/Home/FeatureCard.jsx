@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const FeatureCard = ({
   title,
@@ -6,24 +6,28 @@ const FeatureCard = ({
   icon,
   backgroundColor,
   reverse,
-  position,
+  textPosition = "text-right",
+  positionStyles = {},
+  linkTo,
 }) => {
   return (
-    <div
-      className={`py-6 rounded-lg relative text-center shadow-md flex items-center ${backgroundColor} ${
+    <Link
+      to={linkTo}
+      className={`rounded-lg cursor-pointer relative shadow-md flex items-center ${backgroundColor} ${
         reverse ? "flex-row-reverse" : ""
       }`}
     >
       <img
         src={icon}
         alt={`${title} Icon`}
-        className={`w-26 h-28 mr-4 ml-4 absolute ${position}`}
+        className="w-26 h-26"
+        style={{ position: "relative", ...positionStyles }}
       />
-      <div className="w-full">
+      <div className={`w-full pr-5 ${textPosition}`}>
         <h2 className="text-sm mb-2 font-semibold text-gray-800">{title}</h2>
         <p className="text-sm text-gray-600">{description}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
