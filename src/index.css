@@ -44,6 +44,10 @@ body {
     background-color: #DCE8D6;
 }
 
+.bg-white-50{
+    background-color: #ffffff71;
+}
+
 .text-color {
     color: #05A86B;
 }
