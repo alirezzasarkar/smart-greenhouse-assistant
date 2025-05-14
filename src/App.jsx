@@ -9,13 +9,17 @@ import MainLayout from "./layouts/MainLayout";
 import NotFound from "./pages/NotFound";
 import HomePage from "./pages/Home";
 import PlantDetection from "./pages/PlantDetection";
+import PestDetection from "./pages/PestDetection";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const isFirstVisit = getLocalStorage("isFirstVisit");
-    if (!isFirstVisit) {
+    const currentPath = window.location.pathname;
+    const showModalPaths = ["/plant-detection", "/pest-detection"];
+
+    if (!isFirstVisit && showModalPaths.includes(currentPath)) {
       setShowModal(true);
       setLocalStorage("isFirstVisit", true);
     }
@@ -51,6 +55,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/plant-detection" element={<PlantDetection />} />
+          <Route path="/pest-detection" element={<PestDetection />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

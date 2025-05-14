@@ -12,7 +12,7 @@ const MainLayout = () => {
       iconSrc: "/public/assets/icons/menu-icon/1.svg",
     },
     {
-      to: "/",
+      to: "/pest-detection",
       label: "تشخیص انواع آفات و راه های درمانی آن",
       iconSrc: "/public/assets/icons/menu-icon/2.svg",
     },
