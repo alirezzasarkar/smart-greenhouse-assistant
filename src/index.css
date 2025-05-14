@@ -5,6 +5,11 @@
     src: url('/public/assets/fonts/IRANSansX.woff2') format('woff2');
 }  
 
+@font-face {
+    font-family: 'IRANSans-light';
+    src: url('/public/assets/fonts/IRANSansX-Light.woff2') format('woff2');
+}  
+
 body {
     font-family: 'IRANSans', sans-serif;
     direction: rtl;
@@ -20,6 +25,14 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+p{
+    font-family: 'IRANSans-light', sans-serif;
+}
+
+span{
+    font-family: 'IRANSans-light', sans-serif;
 }
 
 .bg-color {

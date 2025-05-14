@@ -3,7 +3,12 @@ import React from "react";
 const Question = ({ question, options, name, onChange }) => {
   return (
     <div className="my-8">
-      <p className="text-sm font-medium text-gray-700 mb-2">{question}</p>
+      <p
+        className="text-sm font-medium text-gray-700 mb-2"
+        style={{ fontFamily: "IRANSans" }}
+      >
+        {question}
+      </p>
       {options.map((option, index) => (
         <label key={index} className="flex items-center mb-2">
           <input
