@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import HomePage from "./pages/Home";
 import PlantDetection from "./pages/PlantDetection";
 import PestDetection from "./pages/PestDetection";
+import FertilizerDetection from "./pages/FertilizerDetection";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -56,6 +57,10 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/plant-detection" element={<PlantDetection />} />
           <Route path="/pest-detection" element={<PestDetection />} />
+          <Route
+            path="/fertilizer-detection"
+            element={<FertilizerDetection />}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

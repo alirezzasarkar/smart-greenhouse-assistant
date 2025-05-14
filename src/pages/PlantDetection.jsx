@@ -1,7 +1,7 @@
 import React from "react";
-import UploadButton from "../components/PlantDetection/UploadButton";
-import ResultButton from "../components/PlantDetection/ResultButton";
-import Description from "../components/PlantDetection/Description";
+import UploadButton from "../components/common/UploadButton";
+import ResultButton from "../components/common/ResultButton";
+import Description from "../components/common/Description";
 
 const PlantDetection = () => {
   return (
