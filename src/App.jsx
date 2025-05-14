@@ -11,6 +11,9 @@ import HomePage from "./pages/Home";
 import PlantDetection from "./pages/PlantDetection";
 import PestDetection from "./pages/PestDetection";
 import FertilizerDetection from "./pages/FertilizerDetection";
+import WaterDetection from "./pages/WaterDetection";
+import Support from "./pages/Support";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -56,11 +59,14 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/plant-detection" element={<PlantDetection />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/pest-detection" element={<PestDetection />} />
+          <Route path="/support" element={<Support />} />
           <Route
             path="/fertilizer-detection"
             element={<FertilizerDetection />}
           />
+          <Route path="/water-detection" element={<WaterDetection />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

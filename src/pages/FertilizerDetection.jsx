@@ -1,5 +1,4 @@
 import React from "react";
-import UploadButton from "../components/common/UploadButton";
 import ResultButton from "../components/common/ResultButton";
 import Description from "../components/common/Description";
 import Question from "../components/common/Question";
@@ -37,7 +36,7 @@ const handleQuestionChange = (e) => {
 const FertilizerDetection = () => {
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">تشخیص کود</h1>
+      <h1 className="text-lg font-bold mb-5 text-center">تشخیص کود</h1>
       <Description text="استفاده‌ی نادرست از کود می‌تواند به گیاه آسیب بزند. با انتخاب صحیح مرحله رشد گیاه و محیط نگهداری، از توصیه‌های دقیق و علمی بهره‌مند شوید." />
       <div className="flex justify-center my-4">
         <Dropdown

@@ -21,7 +21,7 @@ const HomePage = () => {
       title: "تشخیص هوشمند آب و دما",
       description: "پاسخ سوالات خود را از ربات دریافت کنید",
       icon: "/public/assets/images/3.png",
-      linkTo: "/water-temperature-detection",
+      linkTo: "/water-detection",
     },
     {
       title: "تشخیص هوشمند آفات",

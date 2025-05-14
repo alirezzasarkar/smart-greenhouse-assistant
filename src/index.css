@@ -16,7 +16,7 @@ body {
     text-align: right;
     margin: 0;
     padding: 0;
-    max-width: 430px;
+    max-width: 430px !important;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid #f3f3f39c;
@@ -39,7 +39,7 @@ span{
     background-color: #05A86B;
 }
 .bg-line-color {
-    background-color: #05a86c94;
+    background-color: #05a86c1a;
 }
 .bg-menu {
     background-color: #ECF8F4;

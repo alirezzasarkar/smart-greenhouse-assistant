@@ -17,30 +17,25 @@ const MainLayout = () => {
       iconSrc: "/public/assets/icons/menu-icon/2.svg",
     },
     {
-      to: "/",
-      label: "دریافت اخبار و هواشناسی بر اساس لوکیشن",
-      iconSrc: "/public/assets/icons/menu-icon/3.svg",
-    },
-    {
       to: "/fertilizer-detection",
       label: "تشخیص کود مناسب گیاه و زمان کود دهی",
       iconSrc: "/public/assets/icons/menu-icon/4.svg",
     },
     {
-      to: "/",
+      to: "/water-detection",
       label: "تشخیص آب و دما مناسب گیاه",
       iconSrc: "/public/assets/icons/menu-icon/5.svg",
     },
     {
-      to: "/",
-      label: "سیستم هشدار دهی هنگام تغییرات آب و هوایی",
+      to: "/support",
+      label: "پشتیبانی 24 ساعته",
       iconSrc: "/public/assets/icons/menu-icon/6.svg",
     },
   ];
 
   const menu = [
     {
-      to: "/test2",
+      to: "/profile",
       label: "پروفایل کاربری",
       iconSrc: "/public/assets/icons/profile-1.svg",
       activeIconSrc: "/public/assets/icons/profile.svg",
@@ -72,15 +67,17 @@ const MainLayout = () => {
             className="w-8 h-8"
           />
         </button>
-        <img
-          src="/public/assets/icons/logo-green.svg"
-          alt="Logo"
-          className="h-8 w-auto"
-        />
+        <Link to="/">
+          <img
+            src="/public/assets/icons/logo-green.svg"
+            alt="Logo"
+            className="h-8 w-auto"
+          />
+        </Link>
       </header>
 
       {isMenuOpen && (
-        <div className="absolute top-0 left-0 w-full h-full bg-white-50 shadow-lg z-50 backdrop-blur-2xl">
+        <div className="absolute top-0 left-0 w-full h-full bg-white-50 z-50 backdrop-blur-2xl">
           <button
             className="absolute top-2 right-4 p-2 cursor-pointer"
             onClick={() => setIsMenuOpen(false)}
@@ -116,7 +113,10 @@ const MainLayout = () => {
         <Outlet />
       </div>
 
-      <nav className="fixed bottom-0 w-full mt-10 max-w-md mx-auto bg-menu h-16 flex rounded-t-4xl justify-around items-start pb-18 pt-2">
+      <nav
+        className="fixed bottom-0 w-full mt-10 mx-auto bg-menu h-16 flex rounded-t-4xl justify-around items-start pb-18 pt-2"
+        style={{ maxWidth: "430px" }}
+      >
         {menu.map(({ to, label, iconSrc, activeIconSrc }) => {
           const isActive = pathname === to;
           return (
