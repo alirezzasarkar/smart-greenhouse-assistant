@@ -22,7 +22,7 @@ const MainLayout = () => {
       iconSrc: "/public/assets/icons/menu-icon/3.svg",
     },
     {
-      to: "/",
+      to: "/fertilizer-detection",
       label: "تشخیص کود مناسب گیاه و زمان کود دهی",
       iconSrc: "/public/assets/icons/menu-icon/4.svg",
     },
@@ -60,7 +60,7 @@ const MainLayout = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen relative">
+    <div className="flex flex-col h-full relative">
       <header className="flex items-center justify-between px-4 py-2 bg-white">
         <button
           className="p-2 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-300"
@@ -80,7 +80,7 @@ const MainLayout = () => {
       </header>
 
       {isMenuOpen && (
-        <div className="absolute top-0 left-0 w-full h-full bg-white-50 shadow-lg z-50 backdrop-blur-xl">
+        <div className="absolute top-0 left-0 w-full h-full bg-white-50 shadow-lg z-50 backdrop-blur-2xl">
           <button
             className="absolute top-2 right-4 p-2 cursor-pointer"
             onClick={() => setIsMenuOpen(false)}
@@ -112,11 +112,11 @@ const MainLayout = () => {
         </div>
       )}
 
-      <div key={pathname} className="flex-grow overflow-auto">
+      <div key={pathname} className="flex-grow overflow-auto pb-25">
         <Outlet />
       </div>
 
-      <nav className="relative w-full mt-10 max-w-md mx-auto bg-menu h-16 flex rounded-t-4xl justify-around items-start pb-7">
+      <nav className="fixed bottom-0 w-full mt-10 max-w-md mx-auto bg-menu h-16 flex rounded-t-4xl justify-around items-start pb-18 pt-2">
         {menu.map(({ to, label, iconSrc, activeIconSrc }) => {
           const isActive = pathname === to;
           return (
