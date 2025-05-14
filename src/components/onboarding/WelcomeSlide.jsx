@@ -20,9 +20,11 @@ const WelcomeSlide = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-between h-screen bg-white pb-6">
+    <div className="flex flex-col items-center justify-between bg-white pb-6">
       <img src={imageSrc} alt="تصویر" className="w-full rounded-lg" />
-      <h3 className="text-xl font-bold text-black text-center">{title}</h3>
+      <h3 className="text-xl font-bold text-black text-center mt-10">
+        {title}
+      </h3>
       <p
         className="text-sm text-gray-700 text-justify px-5 mb-6 leading-relaxed"
         style={{ textAlignLast: "center" }}
