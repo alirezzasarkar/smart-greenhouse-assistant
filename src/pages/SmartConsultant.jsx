@@ -16,10 +16,10 @@ const SmartConsultant = () => {
   };
 
   return (
-    <div className="flex flex-col h-full p-4">
+    <div className="relative flex flex-col h-full p-4">
       <SmartConsultantChat messages={messages} />
       <div
-        className="fixed bottom-20 left-0 w-full px-4"
+        className="fixed bottom-20 left-0 w-full px-4 z-10"
         style={{ maxWidth: 430, margin: "0 auto" }}
       >
         <SmartConsultantInput onSend={handleSend} />

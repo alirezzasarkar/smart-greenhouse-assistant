@@ -115,7 +115,10 @@ const MainLayout = () => {
       </header>
 
       {isMenuOpen && (
-        <div className="absolute top-0 left-0 w-full h-full bg-white-50 z-50 backdrop-blur-2xl">
+        <div
+          className="absolute top-0 left-0 w-full h-screen bg-white-50 backdrop-blur-2xl"
+          style={{ zIndex: 1000 }}
+        >
           <button
             className="absolute top-2 right-4 p-2 cursor-pointer"
             onClick={() => setIsMenuOpen(false)}
