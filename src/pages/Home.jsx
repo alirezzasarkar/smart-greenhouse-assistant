@@ -1,5 +1,6 @@
 import WelcomeBanner from "../components/Home/WelcomeBanner";
 import FeatureCard from "../components/Home/FeatureCard";
+import { Link } from "react-router-dom";
 
 /**
  * HomePage component renders the main page of the Smart Farm app.
@@ -44,7 +45,9 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen text-gray-800 p-4">
-      <WelcomeBanner />
+      <Link to="/buy-subscription">
+        <WelcomeBanner />
+      </Link>
 
       <div className="w-full max-w-md space-y-5">
         {features.map((feature, index) => (
