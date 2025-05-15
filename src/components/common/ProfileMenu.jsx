@@ -6,7 +6,7 @@ const ProfileMenu = () => {
     {
       label: "اطلاعات حساب کاربری",
       icon: "/public/assets/icons/profile-icon/profile.svg",
-      to: "/account-info",
+      to: "/profile/account-info",
     },
     {
       label: "لیست پرداخت ها",
