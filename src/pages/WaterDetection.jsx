@@ -34,6 +34,15 @@ const handleQuestionChange = (e) => {
   console.log(e.target.name, e.target.value);
 };
 
+/**
+ * WaterDetection component provides an interface for users to select a plant
+ * and receive care instructions. The component includes a dropdown for plant
+ * selection, questions to refine plant care recommendations, and displays
+ * results based on user input. It handles loading states and displays errors
+ * if no plant is selected. Once a plant is selected, users can obtain information
+ * about optimal light, watering, and temperature conditions for the plant.
+ */
+
 const WaterDetection = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");

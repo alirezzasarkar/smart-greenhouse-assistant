@@ -41,6 +41,16 @@ const handleQuestionChange = (e) => {
   console.log(e.target.name, e.target.value);
 };
 
+/**
+ * The PestDetection component provides an interface for users to upload a
+ * plant image and receive pest detection results. The component includes a
+ * file upload input, a series of questions to refine pest detection
+ * recommendations, and displays results based on user input. It handles
+ * loading states and displays errors if no image is uploaded.
+ *
+ * @returns {JSX.Element} A React component containing the pest detection
+ * interface and results.
+ */
 const PestDetection = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");

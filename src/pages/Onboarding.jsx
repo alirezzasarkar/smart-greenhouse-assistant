@@ -30,6 +30,12 @@ const Onboarding = () => {
     },
   ];
 
+  /**
+   * Advances the onboarding step to the next slide.
+   * If the current step is not the last slide, increments the step by one.
+   * Otherwise, navigates to the sign-up/login page.
+   */
+
   const handleNext = () => {
     if (step < slides.length - 1) {
       setStep(step + 1);

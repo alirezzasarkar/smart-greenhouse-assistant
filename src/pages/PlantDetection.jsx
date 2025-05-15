@@ -4,6 +4,16 @@ import ResultButton from "../components/common/ResultButton";
 import Description from "../components/common/Description";
 import Loader from "../components/common/Loader";
 
+/**
+ * PlantDetection component provides an interface for users to upload an image
+ * of a plant and receive identification results. The component includes an
+ * upload button for image selection, displays a loading indicator while
+ * processing, and shows the results of the detection. It handles error states
+ * if no image is uploaded and provides detailed information about the plant
+ * based on the uploaded image. Users can learn about the plant's family,
+ * light, and watering needs, as well as receive care recommendations.
+ */
+
 const PlantDetection = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");

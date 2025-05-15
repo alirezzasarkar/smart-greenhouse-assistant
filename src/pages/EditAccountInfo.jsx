@@ -3,6 +3,13 @@ import UploadButton from "../components/common/UploadButton";
 import InputField from "../components/common/InputField";
 import RadioGroup from "../components/common/RadioGroup";
 
+/**
+ * EditAccountInfo component renders the account information form
+ * for users to edit their profile information.
+ * The form contains input fields for first name, last name, phone number, email, and usage type
+ * as well as an upload button for profile picture.
+ * The form is submitted when the user clicks the "تکمیل اطلاعات" button.
+ */
 const EditAccountInfo = () => {
   const [formData, setFormData] = useState({
     firstName: "علیرضا",

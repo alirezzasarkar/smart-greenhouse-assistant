@@ -1,6 +1,13 @@
 import WelcomeBanner from "../components/Home/WelcomeBanner";
 import FeatureCard from "../components/Home/FeatureCard";
 
+/**
+ * HomePage component renders the main page of the Smart Farm app.
+ * It displays a banner with a welcome message and a list of feature cards.
+ * Each feature card contains a title, description, icon, and a link to the
+ * corresponding page, such as the fertilizer detection page or the pest
+ * detection page.
+ */
 const HomePage = () => {
   const features = [
     {

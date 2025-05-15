@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * The NotFound component is a page that displays a 404 error
+ * message and a graphic.
+ *
+ * @returns {JSX.Element} The JSX element representing the NotFound component.
+ */
 const NotFound = () => {
   return (
     <div className="flex flex-col items-center justify-between pt-30 overflow-hidden">

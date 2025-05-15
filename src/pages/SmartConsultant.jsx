@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import SmartConsultantChat from "../components/common/SmartConsultantChat";
 import SmartConsultantInput from "../components/common/SmartConsultantInput";
 
+/**
+ * The SmartConsultant component renders a chat-like interface for users to interact
+ * with a smart consultant bot. The component displays a chat log of messages, and
+ * also renders an input field at the bottom of the screen where users can type
+ * messages to send to the bot. The component is meant to be used for a mobile app
+ * and is styled as such.
+ *
+ * The component takes no props and returns a JSX element representing the entire
+ * chat interface.
+ *
+ * @returns {JSX.Element} the rendered chat interface
+ */
 const SmartConsultant = () => {
   const [messages, setMessages] = useState([
     {

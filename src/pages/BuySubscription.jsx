@@ -40,6 +40,14 @@ const plans = [
   },
 ];
 
+/**
+ * BuySubscription component renders a page for user to select a subscription plan.
+ *
+ * The page consists of a description and a list of plans with their features and prices.
+ * A SubscriptionPlanCard component is used to render each plan.
+ *
+ * @returns {JSX.Element} The JSX element representing the BuySubscription component.
+ */
 const BuySubscription = () => {
   return (
     <div className="p-4">

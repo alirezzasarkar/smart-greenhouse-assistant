@@ -2,6 +2,14 @@ import React from "react";
 import PaymentTable from "../components/common/PaymentTable";
 import PageDescription from "../components/common/PageDescription";
 
+/**
+ * Payments component renders a page for user to view and manage their payment history.
+ *
+ * The page consists of a table that displays a list of all transactions, with options to download receipts.
+ * A description is also provided for how to use the page.
+ *
+ * @returns {JSX.Element} The JSX element representing the Payments component.
+ */
 const Payments = () => {
   return (
     <div className="p-4">

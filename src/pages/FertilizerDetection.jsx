@@ -34,6 +34,16 @@ const handleQuestionChange = (e) => {
   console.log(e.target.name, e.target.value);
 };
 
+/**
+ * FertilizerDetection component provides an interface for users to select
+ * a plant and get fertilizer recommendations. It includes a dropdown for
+ * plant selection, questions to refine the fertilizer advice, and displays
+ * results based on user input. It handles loading states and displays errors
+ * if no plant is selected. Users receive information about the optimal fertilizer
+ * type for their plant based on its growth stage and environment, ensuring
+ * accurate and scientific recommendations for healthy plant growth.
+ */
+
 const FertilizerDetection = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");

@@ -21,6 +21,11 @@ import Payments from "./pages/Payments";
 import AnalysisHistory from "./pages/AnalysisHistory";
 import SmartConsultant from "./pages/SmartConsultant";
 
+/**
+ * The main app component, which sets up the routes and a subscription modal
+ * that shows up on the first visit to the plant or pest detection pages.
+ */
+
 function App() {
   const [showModal, setShowModal] = useState(false);
 
