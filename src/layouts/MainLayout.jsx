@@ -90,9 +90,9 @@ const MainLayout = () => {
                 return "اشتراک ها";
               case "/profile":
                 return "پروفایل کاربری";
-              case "/payments":
+              case "/profile/payments":
                 return "لیست پرداخت ها";
-              case "/analysis-history":
+              case "/profile/analysis-history":
                 return "تاریخچه تحلیل ها";
               case "/smart-consultant":
                 return "مشاوره هوشمند گیاه";

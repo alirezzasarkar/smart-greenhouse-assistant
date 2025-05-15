@@ -5,7 +5,7 @@ const AnalysisHistoryCard = ({ title, desc, date, image }) => {
   return (
     <div className="flex bg-white rounded-2xl shadow-gray-100 shadow-md p-3 py-5 gap-3">
       <img
-        src="public/assets/icons/plant.svg"
+        src="/public/assets/icons/plant.svg"
         alt={title}
         className="w-6 h-6 object-cover"
       />

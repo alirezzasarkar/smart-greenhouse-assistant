@@ -6,31 +6,26 @@ const history = [
     title: "تاریخچه تحلیل",
     desc: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده...",
     date: "۱۴۰۴/۰۲/۱۴",
-    image: "/public/assets/images/plant-detection.png",
   },
   {
     title: "تاریخچه تحلیل",
     desc: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده...",
     date: "۱۴۰۴/۰۲/۱۴",
-    image: "/public/assets/images/plant-detection.png",
   },
   {
     title: "تاریخچه تحلیل",
     desc: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده...",
     date: "۱۴۰۴/۰۲/۱۴",
-    image: "/public/assets/images/plant-detection.png",
   },
   {
     title: "تاریخچه تحلیل",
     desc: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده...",
     date: "۱۴۰۴/۰۲/۱۴",
-    image: "/public/assets/images/plant-detection.png",
   },
   {
     title: "تاریخچه تحلیل",
     desc: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده...",
     date: "۱۴۰۴/۰۲/۱۴",
-    image: "/public/assets/images/plant-detection.png",
   },
 ];
 

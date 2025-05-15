@@ -11,17 +11,17 @@ const ProfileMenu = () => {
     {
       label: "لیست پرداخت ها",
       icon: "/public/assets/icons/profile-icon/payment.svg",
-      to: "/payments",
+      to: "/profile/payments",
     },
     {
       label: "تمدید اشتراک",
       icon: "/public/assets/icons/profile-icon/subscription.svg",
-      to: "/renew-subscription",
+      to: "/profile/renew-subscription",
     },
     {
       label: "تاریخچه تحلیل ها",
       icon: "/public/assets/icons/profile-icon/analysis.svg",
-      to: "/analysis-history",
+      to: "/profile/analysis-history",
     },
   ];
 

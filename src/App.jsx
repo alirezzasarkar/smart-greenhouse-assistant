@@ -73,8 +73,11 @@ function App() {
           />
           <Route path="/pest-detection" element={<PestDetection />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/payments" element={<Payments />} />
-          <Route path="/analysis-history" element={<AnalysisHistory />} />
+          <Route path="/profile/payments" element={<Payments />} />
+          <Route
+            path="/profile/analysis-history"
+            element={<AnalysisHistory />}
+          />
           <Route
             path="/fertilizer-detection"
             element={<FertilizerDetection />}
