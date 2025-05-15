@@ -1,8 +1,9 @@
-import React from "react";
 import ResultButton from "../components/common/ResultButton";
 import Description from "../components/common/Description";
 import Question from "../components/common/Question";
 import Dropdown from "../components/common/Dropdown";
+import Loader from "../components/common/Loader";
+import { useState } from "react";
 
 const questions = [
   {
@@ -34,6 +35,31 @@ const handleQuestionChange = (e) => {
 };
 
 const FertilizerDetection = () => {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState("");
+  const [selectedPlant, setSelectedPlant] = useState(null);
+  const [error, setError] = useState("");
+
+  const handleDropdownChange = (selectedOption) => {
+    setSelectedPlant(selectedOption);
+    setError("");
+  };
+
+  const handleResultClick = () => {
+    if (!selectedPlant) {
+      setError("لطفاً ابتدا یک گیاه انتخاب کنید.");
+      return;
+    }
+    setLoading(true);
+    setResult("");
+    setTimeout(() => {
+      setLoading(false);
+      setResult(
+        "شناسایی گیاه با موفقیت انجام شد. گیاه شما از خانواده گیاهان آپارتمانی است و نیاز به نور متوسط و آبیاری منظم دارد. این گیاه در شرایط دمایی بین ۱۸ تا ۲۵ درجه سانتی‌گراد بهترین رشد را دارد. همچنین، توصیه می‌شود هر دو هفته یک‌بار از کود مخصوص گیاهان آپارتمانی استفاده کنید. در صورت مشاهده زردی برگ‌ها، ممکن است گیاه شما دچار کمبود مواد مغذی باشد. لطفاً تصویر گیاه خود را بررسی کنید و در صورت نیاز به اطلاعات بیشتر، با کارشناسان ما تماس بگیرید."
+      );
+    }, 5000);
+  };
+
   return (
     <div className="p-4">
       <Description text="استفاده‌ی نادرست از کود می‌تواند به گیاه آسیب بزند. با انتخاب صحیح مرحله رشد گیاه و محیط نگهداری، از توصیه‌های دقیق و علمی بهره‌مند شوید." />
@@ -41,11 +67,12 @@ const FertilizerDetection = () => {
         <Dropdown
           options={plantOptions}
           placeholder="نام گیاه"
-          onChange={(selectedOption) =>
-            console.log("Selected plant:", selectedOption)
-          }
+          onChange={handleDropdownChange}
         />
       </div>
+
+      {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
+
       <div className="mt-6">
         {questions.map((q, index) => (
           <Question
@@ -58,7 +85,14 @@ const FertilizerDetection = () => {
         ))}
       </div>
       <Description text="با توجه به مرحله رشد گیاه و محیط نگهداری انتخاب‌شده، سیستم هوش مصنوعی ما با بررسی ویژگی‌های تغذیه‌ای این گیاه، بهترین نوع کود را برای رشد سالم و بهینه پیشنهاد می‌دهد. این توصیه بر اساس منابع علمی، تجربیات کشاورزی و تحلیل دقیق داده‌های گیاهی طراحی شده است. به نتیجه اعتماد کنید گیاه شما در مسیر رشد بهتر قرار دارد." />
-      <ResultButton />
+      {loading ? <Loader /> : <ResultButton onClick={handleResultClick} />}
+      {result && (
+        <div className="mt-20 text-center">
+          <h3 className="mb-5 text-color">نتایج تشخیص کود مناسب گیاه شما</h3>
+
+          <p className="text-gray-700 mt-10 text-justify">{result}</p>
+        </div>
+      )}
     </div>
   );
 };
