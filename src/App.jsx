@@ -14,6 +14,11 @@ import FertilizerDetection from "./pages/FertilizerDetection";
 import WaterDetection from "./pages/WaterDetection";
 import Support from "./pages/Support";
 import UserProfile from "./pages/UserProfile";
+import AccountInfo from "./pages/AccountInfo";
+import EditAccountInfo from "./pages/EditAccountInfo";
+import BuySubscription from "./pages/BuySubscription";
+import Payments from "./pages/Payments";
+import AnalysisHistory from "./pages/AnalysisHistory";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -60,13 +65,21 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/plant-detection" element={<PlantDetection />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile/account-info" element={<AccountInfo />} />
+          <Route
+            path="/profile/edit-account-info"
+            element={<EditAccountInfo />}
+          />
           <Route path="/pest-detection" element={<PestDetection />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/analysis-history" element={<AnalysisHistory />} />
           <Route
             path="/fertilizer-detection"
             element={<FertilizerDetection />}
           />
           <Route path="/water-detection" element={<WaterDetection />} />
+          <Route path="/buy-subscription" element={<BuySubscription />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
