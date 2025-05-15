@@ -52,7 +52,7 @@ const MainLayout = () => {
       activeIconSrc: "/public/assets/icons/home.svg",
     },
     {
-      to: "/test1",
+      to: "/smart-consultant",
       label: "مشاوره هوشمند",
       iconSrc: "/public/assets/icons/consultant-1.svg",
       activeIconSrc: "/public/assets/icons/consultant.svg",

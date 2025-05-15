@@ -19,6 +19,7 @@ import EditAccountInfo from "./pages/EditAccountInfo";
 import BuySubscription from "./pages/BuySubscription";
 import Payments from "./pages/Payments";
 import AnalysisHistory from "./pages/AnalysisHistory";
+import SmartConsultant from "./pages/SmartConsultant";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -79,6 +80,7 @@ function App() {
             element={<FertilizerDetection />}
           />
           <Route path="/water-detection" element={<WaterDetection />} />
+          <Route path="/smart-consultant" element={<SmartConsultant />} />
           <Route path="/buy-subscription" element={<BuySubscription />} />
           <Route path="*" element={<NotFound />} />
         </Route>
