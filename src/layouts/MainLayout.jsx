@@ -31,6 +31,11 @@ const MainLayout = () => {
       label: "پشتیبانی 24 ساعته",
       iconSrc: "/public/assets/icons/menu-icon/6.svg",
     },
+    {
+      to: "/buy-subscription",
+      label: "خرید اشتراک",
+      iconSrc: "/public/assets/icons/profile-icon/subscription.svg",
+    },
   ];
 
   const menu = [
@@ -89,15 +94,27 @@ const MainLayout = () => {
             />
           </button>
           <ul className="mt-30 space-y-4 px-4">
-            {tabs.map(({ to, label, iconSrc }) => (
+            {tabs.map(({ to, label, iconSrc }, idx) => (
               <li
                 key={to}
-                className="relative mb-7 hover:bg-gray-100 flex rounded-md items-center"
+                className={`relative mb-7 hover:bg-gray-100 flex rounded-md items-center ${
+                  idx === tabs.length - 1 ? "text-color font-bold" : ""
+                }`}
               >
-                <img src={iconSrc} alt={label} className="w-6 h-6 mr-2" />
+                <img
+                  src={iconSrc}
+                  alt={label}
+                  className={`w-6 h-6 mr-2 ${
+                    idx === tabs.length - 1 ? "filter-green" : ""
+                  }`}
+                />
                 <Link
                   to={to}
-                  className="block py-2 px-4 text-gray-700  flex-1"
+                  className={`block py-2 px-4 flex-1 ${
+                    idx === tabs.length - 1
+                      ? "text-color font-bold"
+                      : "text-gray-700"
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {label}
