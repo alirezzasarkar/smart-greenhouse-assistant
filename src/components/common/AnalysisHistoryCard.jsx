@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 const AnalysisHistoryCard = ({ title, desc, date, image }) => {
   return (
-    <div className="flex bg-white rounded-2xl shadow-gray-100 shadow-md p-3 py-5 items-center gap-3">
+    <div className="flex bg-white rounded-2xl shadow-gray-100 shadow-md p-3 py-5 gap-3">
       <img
-        src={image}
+        src="public/assets/icons/plant.svg"
         alt={title}
-        className="w-22 h-22 object-cover rounded-xl"
+        className="w-6 h-6 object-cover"
       />
       <div className="flex-1 text-right">
         <h3 className="font-bold text-base mb-1">{title}</h3>
