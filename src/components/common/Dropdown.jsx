@@ -13,7 +13,9 @@ const Dropdown = ({
   const handleSelect = (option) => {
     setSelectedOption(option);
     setIsOpen(false);
-    onChange(option);
+    if (onChange) {
+      onChange(option);
+    }
   };
 
   return (
@@ -33,9 +35,9 @@ const Dropdown = ({
             <path
               d="M15 1.5L8 8.5L1 1.5"
               stroke="#888888"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </span>
@@ -59,7 +61,7 @@ const Dropdown = ({
                 <li
                   key={index}
                   onClick={() => handleSelect(option)}
-                  className="p-2 px-3 hover:bg-green-100 rounded-3xl cursor-pointer text-gray-800"
+                  className="p-3 px-3 hover:bg-green-100 rounded-3xl cursor-pointer text-gray-800"
                 >
                   {option}
                 </li>

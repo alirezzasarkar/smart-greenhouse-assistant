@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 
-const UploadButton = () => {
+const UploadButton = ({ onUpload }) => {
   const [uploadStatus, setUploadStatus] = useState(null); // null, 'success', or 'error'
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      if (file.type === "image/jpeg" || file.type === "image/png") {
+      if (
+        file.type === "image/jpeg" ||
+        file.type === "image/png" ||
+        file.type === "image/heic" ||
+        file.type === "image/heif"
+      ) {
         setUploadStatus("success");
+        if (onUpload) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            onUpload(reader.result); // Pass the uploaded image data to the parent component
+          };
+          reader.readAsDataURL(file);
+        }
       } else {
         setUploadStatus("error");
       }

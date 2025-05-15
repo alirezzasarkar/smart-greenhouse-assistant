@@ -27,6 +27,20 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-loading {
+  animation: loading 2s infinite;
+}
+
+
 p{
     font-family: 'IRANSans-light', sans-serif;
 }
