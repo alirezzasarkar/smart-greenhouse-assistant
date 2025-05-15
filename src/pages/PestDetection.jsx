@@ -43,7 +43,6 @@ const handleQuestionChange = (e) => {
 const PestDetection = () => {
   return (
     <div className="p-4">
-      <h1 className="text-lg font-bold mb-5 text-center">تشخیص انواع آفات</h1>
       <Description text="تصویر خود را واضح و با کیفیت مناسب مانند تصویر زیر ارسال کنید" />
       <div className="flex justify-center my-4">
         <img

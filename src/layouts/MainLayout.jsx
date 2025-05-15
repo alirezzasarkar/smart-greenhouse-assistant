@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
+import PageTitle from "../components/common/PageTitle";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
@@ -72,6 +73,38 @@ const MainLayout = () => {
             className="w-8 h-8"
           />
         </button>
+        <PageTitle>
+          {(() => {
+            switch (pathname) {
+              case "/plant-detection":
+                return "تشخیص نوع و خانواده گیاه";
+              case "/pest-detection":
+                return "تشخیص انواع آفات";
+              case "/fertilizer-detection":
+                return "تشخیص کود";
+              case "/water-detection":
+                return "تشخیص آب و دما";
+              case "/support":
+                return "پشتیبانی";
+              case "/buy-subscription":
+                return "اشتراک ها";
+              case "/profile":
+                return "پروفایل کاربری";
+              case "/payments":
+                return "لیست پرداخت ها";
+              case "/analysis-history":
+                return "تاریخچه تحلیل ها";
+              case "/smart-consultant":
+                return "مشاوره هوشمند گیاه";
+              case "/profile/account-info":
+                return "اطلاعات حساب کاربری";
+              case "/profile/edit-account-info":
+                return "ویرایش اطلاعات حساب کاربری";
+              default:
+                return "گلخانه هوشمند";
+            }
+          })()}
+        </PageTitle>
         <Link to="/">
           <img
             src="/public/assets/icons/logo-green.svg"

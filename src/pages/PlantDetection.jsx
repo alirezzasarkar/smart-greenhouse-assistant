@@ -6,7 +6,6 @@ import Description from "../components/common/Description";
 const PlantDetection = () => {
   return (
     <div className="flex flex-col items-center min-h-screen  text-gray-800 p-4">
-      <h1 className="text-lg font-bold mb-5">تشخیص گیاه</h1>
       <p className="text-sm text-gray-600 mt-2">
         تصویر خود را واضح و با کیفیت مناسب مانند تصویر زیر ارسال کنید
       </p>

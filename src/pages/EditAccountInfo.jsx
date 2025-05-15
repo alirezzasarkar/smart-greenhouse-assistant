@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import UploadButton from "../components/common/UploadButton";
+import InputField from "../components/common/InputField";
+import RadioGroup from "../components/common/RadioGroup";
 
 const EditAccountInfo = () => {
   const [formData, setFormData] = useState({
@@ -23,85 +25,49 @@ const EditAccountInfo = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-lg font-bold text-center mb-10">
-        ویرایش حساب کاربری
-      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <label className="block text-right text-sm font-medium text-gray-700">
+        <label className="block text-right text-sm mt-5 font-medium text-gray-700">
           اطلاعات خود را تکمیل کنید
         </label>
-        <input
+        <InputField
           type="text"
           name="firstName"
           placeholder="نام"
           value={formData.firstName}
           onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-200 rounded-2xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         />
-        <input
+        <InputField
           type="text"
           name="lastName"
           placeholder="نام خانوادگی"
           value={formData.lastName}
           onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-200 rounded-2xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         />
-        <input
+        <InputField
           type="text"
           name="phone"
           placeholder="شماره تماس"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-200 rounded-2xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         />
-        <input
+        <InputField
           type="email"
           name="email"
           placeholder="ایمیل (اختیاری)"
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-200 rounded-2xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         />
-        <div className="mt-6">
-          <label className="block text-right text-sm font-medium text-gray-700 mb-4">
-            نوع استفاده شما از پلتفرم چیست؟
-          </label>
-          <div className="flex flex-col gap-2">
-            <label className="flex items-center text-sm mb-2">
-              <input
-                type="radio"
-                name="usageType"
-                value="باغ داری"
-                checked={formData.usageType === "باغ داری"}
-                onChange={handleChange}
-                className="form-radio text-green-500 ml-2"
-              />
-              باغ داری
-            </label>
-            <label className="flex items-center text-sm mb-2">
-              <input
-                type="radio"
-                name="usageType"
-                value="گلخانه داری"
-                checked={formData.usageType === "گلخانه داری"}
-                onChange={handleChange}
-                className="form-radio text-green-500 ml-2"
-              />
-              گلخانه داری
-            </label>
-            <label className="flex items-center text-sm mb-2">
-              <input
-                type="radio"
-                name="usageType"
-                value="گیاهان خانگی"
-                checked={formData.usageType === "گیاهان خانگی"}
-                onChange={handleChange}
-                className="form-radio text-green-500 ml-2"
-              />
-              گیاهان خانگی
-            </label>
-          </div>
-        </div>
+        <RadioGroup
+          label="نوع استفاده شما از پلتفرم چیست؟"
+          name="usageType"
+          options={[
+            { label: "باغ داری", value: "باغ داری" },
+            { label: "گلخانه داری", value: "گلخانه داری" },
+            { label: "گیاهان خانگی", value: "گیاهان خانگی" },
+          ]}
+          selectedValue={formData.usageType}
+          onChange={handleChange}
+        />
         <div className="flex flex-col md:flex-row gap-4 mt-6">
           <UploadButton />
           <button

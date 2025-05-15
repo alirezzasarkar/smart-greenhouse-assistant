@@ -1,4 +1,3 @@
-import React from "react";
 import ResultButton from "../components/common/ResultButton";
 import Description from "../components/common/Description";
 import Question from "../components/common/Question";
@@ -36,9 +35,6 @@ const handleQuestionChange = (e) => {
 const WaterDetection = () => {
   return (
     <div className="p-4">
-      <h1 className="text-lg font-bold mb-5 text-center">
-        تشخیص آب و دمای مناسب گیاه
-      </h1>
       <Description text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت" />
       <div className="flex justify-center my-4">
         <Dropdown

@@ -36,7 +36,6 @@ const handleQuestionChange = (e) => {
 const FertilizerDetection = () => {
   return (
     <div className="p-4">
-      <h1 className="text-lg font-bold mb-5 text-center">تشخیص کود</h1>
       <Description text="استفاده‌ی نادرست از کود می‌تواند به گیاه آسیب بزند. با انتخاب صحیح مرحله رشد گیاه و محیط نگهداری، از توصیه‌های دقیق و علمی بهره‌مند شوید." />
       <div className="flex justify-center my-4">
         <Dropdown

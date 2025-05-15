@@ -1,6 +1,7 @@
 import React from "react";
 import FAQ from "../components/common/FAQ";
 import ContactForm from "../components/common/ContactForm";
+import PageDescription from "../components/common/PageDescription";
 
 const Support = () => {
   const faqs = [
@@ -28,15 +29,11 @@ const Support = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-lg font-bold mb-5 text-center">پشتیبانی</h1>
       <section className="mb-12">
-        <h2 className="text-sm font-bold mb-5">درباره‌ی ما</h2>
-        <p className="text-sm text-gray-600 leading-relaxed text-justify">
-          ما در این اپلیکیشن با عشق به گیاهان و طبیعت، به شما کمک می‌کنیم تا
-          گیاهان خود را بهتر بشناسید، مراقبت کنید و از آن‌ها لذت ببرید. با
-          استفاده از تکنولوژی‌های پیشرفته، تلاش می‌کنیم تا بهترین نوع کود، زمان
-          مناسب آبیاری و شرایط نگهداری را برای گیاهان شما فراهم کنیم.
-        </p>
+        <PageDescription
+          title="درباره‌ی ما"
+          description="ما در این اپلیکیشن با عشق به گیاهان و طبیعت، به شما کمک می‌کنیم تا گیاهان خود را بهتر بشناسید، مراقبت کنید و از آن‌ها لذت ببرید. با استفاده از تکنولوژی‌های پیشرفته، تلاش می‌کنیم تا بهترین نوع کود، زمان مناسب آبیاری و شرایط نگهداری را برای گیاهان شما فراهم کنیم."
+        />
       </section>
       <section className="mb-12">
         <h2 className="text-sm font-bold mb-5">سوالات متداول</h2>

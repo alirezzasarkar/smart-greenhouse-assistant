@@ -1,5 +1,3 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import WelcomeBanner from "../components/Home/WelcomeBanner";
 import FeatureCard from "../components/Home/FeatureCard";
 

@@ -17,9 +17,6 @@ const SmartConsultant = () => {
 
   return (
     <div className="flex flex-col h-full p-4">
-      <h1 className="text-center font-bold text-lg mb-10">
-        مشاوره هوشمند گیاه
-      </h1>
       <SmartConsultantChat messages={messages} />
       <div
         className="fixed bottom-20 left-0 w-full px-4"
