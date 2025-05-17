@@ -11,10 +11,10 @@ const SmartConsultantInput = ({ onSend }) => {
   };
 
   return (
-    <div className="flex items-center border border-gray-300 rounded-4xl px-4 py-4 mb-10">
+    <div className="flex items-center border border-gray-300 rounded-4xl px-4 py-4 bg-white mb-10 shadow-md">
       <input
         type="text"
-        className="flex-1 border-none outline-none bg-transparent text-sm"
+        className="flex-1 border-none outline-none  text-sm"
         placeholder="سوال خود را بپرسید"
         value={value}
         onChange={(e) => setValue(e.target.value)}

@@ -174,7 +174,7 @@ const MainLayout = () => {
       </div>
 
       <nav
-        className="fixed bottom-0 w-full mt-10 mx-auto bg-menu h-16 flex rounded-t-4xl justify-around items-start pb-18 pt-2"
+        className="fixed bottom-0 w-full mt-10 mx-auto bg-menu h-16 flex rounded-t-4xl justify-around items-start pb-18 pt-2 z-20"
         style={{ maxWidth: "430px" }}
       >
         {menu.map(({ to, label, iconSrc, activeIconSrc }) => {
