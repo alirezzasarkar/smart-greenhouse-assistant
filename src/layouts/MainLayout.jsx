@@ -171,7 +171,7 @@ const MainLayout = () => {
         style={{ maxWidth: "430px" }}
       >
         {menu.map(({ to, label, iconSrc, activeIconSrc }) => {
-          const isActive = pathname === to;
+          const isActive = pathname === to || pathname.startsWith(to + "/");
           return (
             <Link
               key={to}
