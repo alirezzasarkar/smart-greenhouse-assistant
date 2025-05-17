@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
+import { motion } from "framer-motion";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
@@ -122,9 +123,13 @@ const MainLayout = () => {
       </header>
 
       {isMenuOpen && (
-        <div
+        <motion.div
           className="absolute top-0 left-0 w-full h-screen bg-white-50 backdrop-blur-2xl"
           style={{ zIndex: 1000 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }} // Added fade-out effect for menu closing
+          transition={{ duration: 0.5 }}
         >
           <button
             className="absolute top-2 right-4 p-2 cursor-pointer"
@@ -166,16 +171,19 @@ const MainLayout = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </motion.div>
       )}
 
       <div key={pathname} className="flex-grow overflow-auto pb-25">
         <Outlet />
       </div>
 
-      <nav
+      <motion.nav
         className="fixed bottom-0 w-full mt-10 mx-auto bg-menu h-16 flex rounded-t-4xl justify-around items-start pb-18 pt-2 z-20"
         style={{ maxWidth: "430px" }}
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
       >
         {menu.map(({ to, label, iconSrc, activeIconSrc }) => {
           const isActive = pathname === to || pathname.startsWith(to + "/");
@@ -185,32 +193,34 @@ const MainLayout = () => {
               to={to}
               className="flex flex-col items-center text-center"
             >
-              <div
+              <motion.div
                 className={
                   `transition-all duration-200 flex items-center justify-center ` +
                   (isActive
                     ? "relative -mt-4 w-12 h-12 bg-color text-white rounded-full"
                     : "mt-2 w-6 h-6 text-gray-400")
                 }
+                whileHover={{ scale: 1.1 }}
               >
                 <img
                   src={isActive ? activeIconSrc : iconSrc}
                   alt={label}
                   className="w-6 h-6"
                 />
-              </div>
-              <span
+              </motion.div>
+              <motion.span
                 className={
                   `block mt-2 text-xs transition-colors duration-200 ` +
                   (isActive ? "text-color font-medium" : "text-gray-500")
                 }
+                whileHover={{ scale: 1.1 }}
               >
                 {label}
-              </span>
+              </motion.span>
             </Link>
           );
         })}
-      </nav>
+      </motion.nav>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import WelcomeBanner from "../components/Home/WelcomeBanner";
 import FeatureCard from "../components/Home/FeatureCard";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 /**
  * HomePage component renders the main page of the Smart Farm app.
@@ -44,26 +45,60 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center min-h-screen text-gray-800 p-4">
-      <Link to="/buy-subscription">
-        <WelcomeBanner />
-      </Link>
+    <motion.div
+      className="flex flex-col items-center min-h-screen text-gray-800 p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Link to="/buy-subscription">
+          <WelcomeBanner />
+        </Link>
+      </motion.div>
 
-      <div className="w-full max-w-md space-y-5">
+      <motion.div
+        className="w-full max-w-md space-y-5"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+              staggerChildren: 0.2,
+            },
+          },
+        }}
+      >
         {features.map((feature, index) => (
-          <FeatureCard
+          <motion.div
             key={index}
-            title={feature.title}
-            description={feature.description}
-            icon={feature.icon}
-            backgroundColor={index % 2 === 0 ? "bg-feature-1" : "bg-feature-2"}
-            reverse={index % 2 !== 1}
-            position={index % 2 !== 1 ? "-left-14" : "-right-14"}
-            linkTo={feature.linkTo}
-          />
+            variants={{
+              hidden: { opacity: 0, y: 50 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
+            <FeatureCard
+              title={feature.title}
+              description={feature.description}
+              icon={feature.icon}
+              backgroundColor={
+                index % 2 === 0 ? "bg-feature-1" : "bg-feature-2"
+              }
+              reverse={index % 2 !== 1}
+              position={index % 2 !== 1 ? "-left-14" : "-right-14"}
+              linkTo={feature.linkTo}
+            />
+          </motion.div>
         ))}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
