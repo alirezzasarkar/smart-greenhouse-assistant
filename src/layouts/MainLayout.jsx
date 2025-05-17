@@ -101,6 +101,13 @@ const MainLayout = () => {
               case "/profile/edit-account-info":
                 return "ویرایش اطلاعات حساب کاربری";
               default:
+                if (
+                  pathname.startsWith(
+                    "/profile/analysis-history/analysis-detail/"
+                  )
+                ) {
+                  return "جزئیات تحلیل";
+                }
                 return "گلخانه هوشمند";
             }
           })()}

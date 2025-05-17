@@ -21,6 +21,7 @@ import Payments from "./pages/Payments";
 import AnalysisHistory from "./pages/AnalysisHistory";
 import SmartConsultant from "./pages/SmartConsultant";
 import SubscriptionRenewal from "./pages/SubscriptionRenewal";
+import AnalysisDetail from "./pages/AnalysisDetail";
 
 /**
  * The main app component, which sets up the routes and a subscription modal
@@ -83,6 +84,10 @@ function App() {
           <Route
             path="/profile/analysis-history"
             element={<AnalysisHistory />}
+          />
+          <Route
+            path="/profile/analysis-history/analysis-detail/:id"
+            element={<AnalysisDetail />}
           />
           <Route
             path="/fertilizer-detection"
