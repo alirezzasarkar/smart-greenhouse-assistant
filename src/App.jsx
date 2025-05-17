@@ -20,6 +20,7 @@ import BuySubscription from "./pages/BuySubscription";
 import Payments from "./pages/Payments";
 import AnalysisHistory from "./pages/AnalysisHistory";
 import SmartConsultant from "./pages/SmartConsultant";
+import SubscriptionRenewal from "./pages/SubscriptionRenewal";
 
 /**
  * The main app component, which sets up the routes and a subscription modal
@@ -90,6 +91,10 @@ function App() {
           <Route path="/water-detection" element={<WaterDetection />} />
           <Route path="/smart-consultant" element={<SmartConsultant />} />
           <Route path="/buy-subscription" element={<BuySubscription />} />
+          <Route
+            path="/profile/subscription-renewal"
+            element={<SubscriptionRenewal />}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

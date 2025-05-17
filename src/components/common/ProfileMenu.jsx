@@ -16,7 +16,7 @@ const ProfileMenu = () => {
     {
       label: "تمدید اشتراک",
       icon: "/public/assets/icons/profile-icon/subscription.svg",
-      to: "/profile/renew-subscription",
+      to: "/profile/subscription-renewal",
     },
     {
       label: "تاریخچه تحلیل ها",
@@ -28,15 +28,14 @@ const ProfileMenu = () => {
   return (
     <ul className="space-y-4 ">
       {menuItems.map((item, index) => (
-        <li
-          key={index}
-          className="border border-gray-200 flex items-center bg-white p-4 rounded-2xl "
-        >
-          <img src={item.icon} alt={item.label} className="w-6 h-6 ml-4" />
-          <Link to={item.to} className="text-sm text-gray-700 flex-1">
-            {item.label}
-          </Link>
-        </li>
+        <Link to={item.to} key={index} className="block">
+          <li className="border border-gray-200 flex items-center bg-white p-4 rounded-2xl ">
+            <img src={item.icon} alt={item.label} className="w-6 h-6 ml-4" />
+            <span className="text-sm text-gray-700 font-bold flex-1">
+              {item.label}
+            </span>
+          </li>
+        </Link>
       ))}
     </ul>
   );
