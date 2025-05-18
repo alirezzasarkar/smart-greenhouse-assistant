@@ -2,6 +2,8 @@ import WelcomeBanner from "../components/Home/WelcomeBanner";
 import FeatureCard from "../components/Home/FeatureCard";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import Loading from "../components/common/PlantLoader";
 
 /**
  * HomePage component renders the main page of the Smart Farm app.
@@ -11,6 +13,8 @@ import { motion } from "framer-motion";
  * detection page.
  */
 const HomePage = () => {
+  const [loading, setLoading] = useState(false);
+
   const features = [
     {
       title: "تشخیص هوشمند کود",
@@ -43,6 +47,10 @@ const HomePage = () => {
       linkTo: "/support",
     },
   ];
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <motion.div

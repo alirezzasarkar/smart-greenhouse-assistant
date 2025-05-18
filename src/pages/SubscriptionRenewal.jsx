@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SubscriptionPlanCard from "../components/common/SubscriptionPlanCard";
+import Loading from "../components/common/PlantLoader";
 
 const plans = [
   {
@@ -44,6 +45,11 @@ const plans = [
 const SubscriptionRenewal = () => {
   const [subscriptionStatus, setSubscriptionStatus] = useState("تمام شد");
   const [remainingDays, setRemainingDays] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-4">

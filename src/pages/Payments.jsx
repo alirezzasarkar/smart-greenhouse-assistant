@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import PaymentTable from "../components/common/PaymentTable";
 import PageDescription from "../components/common/PageDescription";
+import Loading from "../components/common/PlantLoader";
 
 /**
  * Payments component renders a page for user to view and manage their payment history.
@@ -11,6 +12,11 @@ import PageDescription from "../components/common/PageDescription";
  * @returns {JSX.Element} The JSX element representing the Payments component.
  */
 const Payments = () => {
+  const [loading, setLoading] = useState(false);
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="p-4">
       <PaymentTable />

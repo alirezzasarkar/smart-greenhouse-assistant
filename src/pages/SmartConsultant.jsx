@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SmartConsultantChat from "../components/common/SmartConsultantChat";
 import SmartConsultantInput from "../components/common/SmartConsultantInput";
+import Loading from "../components/common/PlantLoader";
 
 /**
  * The SmartConsultant component renders a chat-like interface for users to interact
@@ -15,6 +16,8 @@ import SmartConsultantInput from "../components/common/SmartConsultantInput";
  * @returns {JSX.Element} the rendered chat interface
  */
 const SmartConsultant = () => {
+  const [loading, setLoading] = useState(false);
+
   const [messages, setMessages] = useState([
     {
       from: "bot",
@@ -56,6 +59,10 @@ const SmartConsultant = () => {
   const handleSend = (msg) => {
     setMessages((prev) => [...prev, { from: "user", text: msg }]);
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="relative flex w-full flex-col h-full px-4 pb-25">

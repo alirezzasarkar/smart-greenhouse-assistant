@@ -3,7 +3,7 @@ import Loader from "../../components/common/Loader";
 
 const Loading = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-color px-4">
+    <div className="relative flex flex-col items-center justify-center h-screen bg-color px-4">
       <img
         src="/public/assets/icons/logo.svg"
         alt="لوگو"

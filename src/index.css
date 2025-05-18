@@ -95,3 +95,10 @@ span{
       height: 36px;
     }
 }
+
+
+.loading-main svg{
+    width: 170% !important;
+    height: 170% !important;
+    transform: translate3d(180px, -100px, 0px) !important;
+}
