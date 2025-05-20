@@ -29,8 +29,6 @@ import LoadingPage from "./pages/Loading";
  * that shows up on the first visit to the plant or pest detection pages.
  */
 
-// test
-
 function App() {
   const [showModal, setShowModal] = useState(false);
 
