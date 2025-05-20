@@ -4,35 +4,70 @@ import ResultButton from "../components/common/ResultButton";
 import Description from "../components/common/Description";
 import Question from "../components/common/Question";
 import Loader from "../components/common/Loader";
-
 const questions = [
   {
-    question: "بیماری چند روز پیش ایجاد شده؟",
-    name: "diseaseDuration",
+    question: "محیط نگهداری گیاه کجاست؟",
+    name: "plantLocation",
     options: [
-      { label: "سه روز", value: "3days" },
-      { label: "یک ماه", value: "1month" },
-      { label: "دو هفته", value: "2weeks" },
-      { label: "امروز", value: "today" },
+      { label: "آپارتمان", value: "apartment" },
+      { label: "بالکن و تراس", value: "balcony_terrace" },
+      { label: "باغ", value: "garden" },
+      { label: "گلخانه", value: "greenhouse" },
     ],
   },
   {
-    question: "آخرین باری که گیاهتو آبیاری کردی کی بود؟",
-    name: "lastWatering",
+    question: "وضعیت نور محیط نگهداری گل چگونه بود؟",
+    name: "lightType",
     options: [
-      { label: "سه روز", value: "3days" },
-      { label: "یک ماه", value: "1month" },
-      { label: "دو هفته", value: "2weeks" },
-      { label: "امروز", value: "today" },
+      { label: "نور مستقیم خورشید", value: "direct_sunlight" },
+      { label: "نور مصنوعی", value: "artificial_light" },
+      { label: "نور غیرمستقیم", value: "indirect_light" },
+      { label: "کم نور یا بدون نور", value: "low_or_no_light" },
     ],
   },
   {
-    question: "نور محیط گیاهت به چه صورت بود؟",
-    name: "lightCondition",
+    question: "دمای محیطی که گیاه نگهداری می‌شود معمولاً چقدر است؟",
+    name: "temperature",
     options: [
-      { label: "کم", value: "low" },
-      { label: "متوسط", value: "medium" },
-      { label: "زیاد", value: "high" },
+      { label: "زیر ۱۵ درجه", value: "below_15c" },
+      { label: "بین ۱۵ تا ۲۵ درجه", value: "15_to_25c" },
+      { label: "بالای ۲۵ درجه", value: "above_25c" },
+      { label: "متغیر بوده و مشخص نیست", value: "variable_unknown" },
+    ],
+  },
+  {
+    question: "آیا در خاک یا اطراف گیاه، حشرات یا لارو دیده‌اید؟",
+    name: "insectsPresent",
+    options: [
+      { label: "بله", value: "yes" },
+      { label: "خیر", value: "no" },
+    ],
+  },
+  {
+    question: "زه‌کشی گلدان چگونه است؟",
+    name: "drainage",
+    options: [
+      { label: "خوب است، آب اضافی خارج می‌شود", value: "good_drainage" },
+      { label: "متوسط است", value: "average_drainage" },
+      { label: "ضعیف یا بدون خروج آب", value: "poor_drainage" },
+    ],
+  },
+  {
+    question: "آیا اخیراً گیاه را جابه‌جا کرده‌اید یا گلدانش را عوض کرده‌اید؟",
+    name: "recentTransplant",
+    options: [
+      { label: "بله", value: "yes" },
+      { label: "خیر", value: "no" },
+    ],
+  },
+  {
+    question: "آیا اخیراً به عنوان تقویتی از آفت‌کش استفاده کرده‌اید؟",
+    name: "pesticideUsage",
+    options: [
+      { label: "در یک ماه گذشته", value: "within_1_month" },
+      { label: "بین ۱ تا ۳ ماه گذشته", value: "between_1_and_3_months" },
+      { label: "بیشتر از ۳ ماه گذشته", value: "more_than_3_months" },
+      { label: "اصلاً استفاده نکرده‌ام", value: "never_used" },
     ],
   },
 ];
@@ -90,11 +125,35 @@ const PestDetection = () => {
       <UploadButton onUpload={handleUpload} />
       {error && <p className="text-red-500 text-center mt-4">{error}</p>}
       <Description
-        text="پس از بارگذاری تصویر موردنظر، لطفاً سوالات زیر را پاسخ دهید. در صورت واضح و باکیفیت بودن عکس، سامانه قادر خواهد بود نوع آفت را با دقت بیشتری شناسایی کند. 
-        تصویر باید با فرمت JPG یا PNG باشد
-        حداکثر حجم فایل: ۱۰ مگابایت
-        عکس باید واضح و شامل برگ یا گل گیاه باشد"
+        text={
+          <>
+            برای شناسایی آفات گیاه خود به صورت خودکار، مراحل زیر را دنبال کنید:
+            <br />
+            <span className="font-semibold">
+              ۱. یک عکس واضح از قسمت‌های آسیب‌دیده یا مشکوک گیاه خود بگیرید یا
+              آن را آپلود کنید.
+            </span>
+            <br />
+            <span className="font-semibold">
+              ۲. حجم فایل عکس نباید بیشتر از ۱۰ مگابایت باشد.
+            </span>
+            <br />
+            <span className="font-semibold">
+              ۳. عکس باید واضح بوده و بخش‌هایی مانند برگ‌ها، ساقه‌ها یا گل‌ها که
+              علائم آفت در آنها دیده می‌شود، مشخص باشد.
+            </span>
+            <br />
+            <span>
+              این قابلیت به شما کمک می‌کند تا انواع آفات و بیماری‌های گیاهی را
+              به سرعت شناسایی کرده و راهکارهای درمانی مناسب را دریافت کنید تا
+              سلامت گیاهان‌تان حفظ شود.
+            </span>
+          </>
+        }
       />
+
+      <Description text="برای دقت بیشتر در پاسخ دریافتی، لطفاً به سوالات زیر پاسخ دهید. (پاسخ‌گویی اختیاری است)" />
+
       <div className="mt-10">
         {questions.map((q, index) => (
           <Question

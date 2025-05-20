@@ -22,6 +22,7 @@ import AnalysisHistory from "./pages/AnalysisHistory";
 import SmartConsultant from "./pages/SmartConsultant";
 import SubscriptionRenewal from "./pages/SubscriptionRenewal";
 import AnalysisDetail from "./pages/AnalysisDetail";
+import LoadingPage from "./pages/Loading";
 
 /**
  * The main app component, which sets up the routes and a subscription modal

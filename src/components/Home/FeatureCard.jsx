@@ -13,7 +13,7 @@ const FeatureCard = ({
   return (
     <Link
       to={linkTo}
-      className={`rounded-lg cursor-pointer relative shadow-md flex items-center ${backgroundColor} ${
+      className={`rounded-lg py-2 cursor-pointer relative shadow-md flex items-center ${backgroundColor} ${
         reverse ? "flex-row-reverse" : ""
       }`}
     >
@@ -23,7 +23,7 @@ const FeatureCard = ({
         className="w-26 h-26"
         style={{ position: "relative", ...positionStyles }}
       />
-      <div className={`w-full pr-5 ${textPosition}`}>
+      <div className={`w-full pr-5 pl-3 ${textPosition}`}>
         <h2 className="text-sm mb-2 font-semibold text-gray-800">{title}</h2>
         <p className="text-sm text-gray-600">{description}</p>
       </div>

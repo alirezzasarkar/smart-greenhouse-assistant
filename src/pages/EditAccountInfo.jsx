@@ -65,12 +65,12 @@ const EditAccountInfo = () => {
           onChange={handleChange}
         />
         <RadioGroup
-          label="نوع استفاده شما از پلتفرم چیست؟"
+          label="پلتفرم را بیشتر در چه زمینه‌ای استفاده می‌کنید؟"
           name="usageType"
           options={[
-            { label: "باغ داری", value: "باغ داری" },
-            { label: "گلخانه داری", value: "گلخانه داری" },
-            { label: "گیاهان خانگی", value: "گیاهان خانگی" },
+            { label: "باغداری", value: "" },
+            { label: "گلخانه‌داری", value: "" },
+            { label: "نگهداری از گیاهان خانگی", value: "" },
           ]}
           selectedValue={formData.usageType}
           onChange={handleChange}

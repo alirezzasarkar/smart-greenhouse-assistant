@@ -12,10 +12,12 @@ const AccountInfoCard = () => {
         />
         <div className="text-right">
           <p className="text-sm text-gray-500 mb-6">
-            نام و نام خانوادگی:{" "}
-            <span className="font-bold text-black block mt-2">
-              علیرضا سرکار
-            </span>
+            نام :{" "}
+            <span className="font-bold text-black block mt-2">علیرضا</span>
+          </p>
+          <p className="text-sm text-gray-500 mb-6">
+            نام خانوادگی:{" "}
+            <span className="font-bold text-black block mt-2">سرکار</span>
           </p>
           <p className="text-sm text-gray-500 mb-6">
             ایمیل:{" "}

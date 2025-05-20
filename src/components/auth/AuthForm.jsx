@@ -24,11 +24,12 @@ const AuthForm = () => {
         alt="لوگو"
         className="w-36 h-36 sm:w-36 sm:h-36 mb-10"
       />
-      <h1 className="text-2xl font-bold text-gray-800 mt-10 mb-5 text-center">
-        به دنیای سبز خود خوش آمدید!
+      <h1 className="text-xl font-bold text-gray-800 mt-10 mb-5 text-center">
+        قدم اول برای مراقبتی دقیق و هوشمند
       </h1>
       <p className="text-sm text-gray-500 mb-12 text-center">
-        با ثبت‌نام، سریع‌تر و هوشمندانه‌تر از گیاهانت مراقبت کن
+        برای شروع کافیست وارد حساب کاربری‌تان شوید، یا اگر کاربر جدید هستید،
+        همین حالا ثبت‌نام کنید.
       </p>
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
         <PhoneInput value={phone} onChange={handleChange} />

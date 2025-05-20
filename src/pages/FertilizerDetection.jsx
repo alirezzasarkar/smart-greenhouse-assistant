@@ -7,23 +7,84 @@ import { useState } from "react";
 
 const questions = [
   {
-    question: "محیط نگهداری شما چیست؟",
-    name: "environment",
+    question: "گیاه در چه مرحله ای از رشد قرار دارد؟",
+    name: "growthStage",
     options: [
-      { label: "فضای باز", value: "outdoor" },
-      { label: "گلخانه", value: "greenhouse" },
-      { label: "خانه", value: "home" },
-      { label: "لابراتوار", value: "lab" },
+      { label: "مرحله‌برداشت (رسیده)", value: "harvest" },
+      { label: "در حال رشد (برگ‌دهی و ساقه)", value: "growing" },
+      { label: "نهال ابتدایی (تازه کاشته‌شده)", value: "seedling" },
+      { label: "قلمه‌زنی (تکثیر یافته)", value: "propagated" },
+      { label: "اصلاً رشد نکرده (ایستا)", value: "no_growth" },
     ],
   },
   {
-    question: "رشد گیاه شما در چه مرحله ای است؟",
-    name: "growthStage",
+    question: "محیط نگهداری گیاه کجاست؟",
+    name: "plantLocation",
     options: [
-      { label: "گل دهی", value: "flowering" },
-      { label: "میوه دهی", value: "fruiting" },
-      { label: "رشد فعال", value: "active" },
+      { label: "آپارتمان", value: "apartment" },
+      { label: "بالکن و تراس", value: "balcony_terrace" },
       { label: "باغ", value: "garden" },
+      { label: "گلخانه", value: "greenhouse" },
+    ],
+  },
+  {
+    question: "وضعیت نور محیط نگهداری گل چگونه بود؟",
+    name: "lightType",
+    options: [
+      { label: "نور مستقیم خورشید", value: "direct_sunlight" },
+      { label: "نور مصنوعی", value: "artificial_light" },
+      { label: "نور غیرمستقیم", value: "indirect_light" },
+      { label: "کم نور یا بدون نور", value: "low_light" },
+    ],
+  },
+  {
+    question: "دمای محیطی که گیاه نگهداری می‌شود معمولاً چقدر است؟",
+    name: "temperature",
+    options: [
+      { label: "زیر ۱۵ درجه", value: "below_15" },
+      { label: "بین ۱۵ تا ۲۵ درجه", value: "15_to_25" },
+      { label: "بالای ۲۵ درجه", value: "above_25" },
+      { label: "متغیر بوده و مشخص نیست", value: "unknown" },
+    ],
+  },
+  {
+    question: "خاک گیاه شما چه ویژگی دارد؟",
+    name: "soilType",
+    options: [
+      { label: "خاک شنی", value: "sandy" },
+      { label: "خاک رسی", value: "clay" },
+      { label: "خاک آهکی", value: "alkaline" },
+      { label: "نمیدانم", value: "unknown" },
+    ],
+  },
+  {
+    question: "شرایط آب و هوایی محیط نگهداری گیاه چگونه است؟",
+    name: "climate",
+    options: [
+      { label: "گرم و خشک", value: "hot_dry" },
+      { label: "گرم و مرطوب", value: "hot_humid" },
+      { label: "معتدل و مرطوب", value: "mild_humid" },
+      { label: "سرد و خشک", value: "cold_dry" },
+      { label: "سرد و مرطوب", value: "cold_humid" },
+      { label: "معتدل و خشک", value: "mild_dry" },
+    ],
+  },
+  {
+    question: "آخرین بار چه زمانی به گیاه کود داده‌اید؟",
+    name: "lastFertilization",
+    options: [
+      { label: "کمتر از ۱ ماه گذشته", value: "under_1_month" },
+      { label: "بین ۱ تا ۳ ماه گذشته", value: "between_1_and_3_months" },
+      { label: "بیشتر از ۳ ماه گذشته", value: "over_3_months" },
+      { label: "تا حالا کود نداده‌ام", value: "never" },
+    ],
+  },
+  {
+    question: "آیا گیاه دچار آفت یا بیماری بوده است؟",
+    name: "diseaseHistory",
+    options: [
+      { label: "بله، اخیراً مشاهده شده", value: "yes" },
+      { label: "خیر، گیاه سالم است", value: "no" },
     ],
   },
 ];
@@ -72,7 +133,33 @@ const FertilizerDetection = () => {
 
   return (
     <div className="p-4">
-      <Description text="استفاده‌ی نادرست از کود می‌تواند به گیاه آسیب بزند. با انتخاب صحیح مرحله رشد گیاه و محیط نگهداری، از توصیه‌های دقیق و علمی بهره‌مند شوید." />
+      <Description
+        text={
+          <>
+            برای دریافت پیشنهاد دقیق در مورد نوع و زمان کوددهی مناسب، مراحل زیر
+            را طی کنید:
+            <br />
+            <span className="font-semibold">
+              ۱. از لیست ارائه‌شده، گیاه مورد نظر خود را انتخاب کنید.
+            </span>
+            <br />
+            <span className="font-semibold">
+              ۲. پس از انتخاب، اطلاعاتی درباره نوع کود مناسب، مقدار مصرف و
+              زمان‌بندی کوددهی نمایش داده می‌شود.
+            </span>
+            <br />
+            <span className="font-semibold">
+              ۳. با توجه به این اطلاعات، می‌توانید برنامه‌ کوددهی دقیق‌تری برای
+              گیاه خود تنظیم کنید.
+            </span>
+            <br />
+            <span>
+              این قابلیت به شما کمک می‌کند تا تغذیه گیاهانتان را به شکل اصولی
+              انجام دهید و رشد سالم‌تری را تجربه کنید.
+            </span>
+          </>
+        }
+      />
       <div className="flex justify-center my-4">
         <Dropdown
           options={plantOptions}
@@ -82,6 +169,7 @@ const FertilizerDetection = () => {
       </div>
 
       {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
+      <Description text="برای دقت بیشتر در پاسخ دریافتی، لطفاً به سوالات زیر پاسخ دهید. (پاسخ‌گویی اختیاری است)" />
 
       <div className="mt-6">
         {questions.map((q, index) => (

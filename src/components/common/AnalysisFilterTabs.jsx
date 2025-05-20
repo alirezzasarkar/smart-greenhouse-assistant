@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 const tabs = [
-  { label: "تحلیل آب و دما" },
-  { label: "تحلیل آفات" },
-  { label: "تحلیل کود" },
-  { label: "تحلیل گیاه" },
+  { label: "آب و دما" },
+  { label: "آفات" },
+  { label: "کود" },
+  { label: "نوع گیاه" },
 ];
 
 const AnalysisFilterTabs = () => {

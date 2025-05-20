@@ -10,27 +10,27 @@ const MainLayout = () => {
   const tabs = [
     {
       to: "/plant-detection",
-      label: "تشخیص نوع و خانواده گیاه",
+      label: "شناسایی نوع و خانواده گیاه",
       iconSrc: "/public/assets/icons/menu-icon/1.svg",
     },
     {
       to: "/pest-detection",
-      label: "تشخیص انواع آفات و راه های درمانی آن",
+      label: "شناسایی آفات گیاه و روش‌های درمان",
       iconSrc: "/public/assets/icons/menu-icon/2.svg",
     },
     {
       to: "/fertilizer-detection",
-      label: "تشخیص کود مناسب گیاه و زمان کود دهی",
+      label: "شناسایی کود مناسب و زمان کوددهی",
       iconSrc: "/public/assets/icons/menu-icon/4.svg",
     },
     {
       to: "/water-detection",
-      label: "تشخیص آب و دما مناسب گیاه",
+      label: "تعیین میزان آب و دمای مناسب گیاه",
       iconSrc: "/public/assets/icons/menu-icon/5.svg",
     },
     {
       to: "/support",
-      label: "پشتیبانی 24 ساعته",
+      label: "پشتیبانی ۲۴ ساعته",
       iconSrc: "/public/assets/icons/menu-icon/6.svg",
     },
     {

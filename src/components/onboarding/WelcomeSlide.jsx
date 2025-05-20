@@ -22,7 +22,7 @@ const WelcomeSlide = ({
   return (
     <div className="flex flex-col items-center justify-between bg-white pb-6">
       <img src={imageSrc} alt="تصویر" className="w-full rounded-lg" />
-      <h3 className="text-xl font-bold text-black text-center mt-10">
+      <h3 className="text-xl font-bold text-black text-center mt-5 mb-3">
         {title}
       </h3>
       <p
