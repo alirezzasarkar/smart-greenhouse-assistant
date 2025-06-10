@@ -39,29 +39,44 @@ export const AuthProvider = ({ children }) => {
   const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN_KEY);
   const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN_KEY);
 
-  // is first visit
-  // useEffect(() => {}, []);
+  const logout = () => {
+    clearTokens();
+    setUser(null);
+    setIsAuthenticated(false);
+    setError(null);
+  };
 
-  // response interceptor
+  const refreshToken = async () => {
+    try {
+      const refresh = getRefreshToken();
+      if (!refresh) throw new Error("توکن رفرش موجود نیست");
+      const { data } = await refreshTokenRequest(refresh);
+      saveTokens(data.access, data.refresh);
+      return data.access;
+    } catch (err) {
+      logout();
+      throw err;
+    }
+  };
+
   useEffect(() => {
     const responseInterceptor = axios.interceptors.response.use(
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        if (
+          error.response?.status === 401 &&
+          !originalRequest._retry &&
+          !originalRequest.url.includes("/users/auth/verify-code/")
+        ) {
           originalRequest._retry = true;
           try {
-            const refreshToken = getRefreshToken();
-            if (!refreshToken) {
-              logout();
-              return Promise.reject(error);
-            }
-            const { data } = await refreshTokenRequest(refreshToken);
-            saveTokens(data.access, data.refresh);
-            originalRequest.headers["Authorization"] = `Bearer ${data.access}`;
+            const newAccessToken = await refreshToken();
+            originalRequest.headers[
+              "Authorization"
+            ] = `Bearer ${newAccessToken}`;
             return axios(originalRequest);
           } catch (refreshError) {
-            logout();
             return Promise.reject(refreshError);
           }
         }
@@ -74,16 +89,10 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  // get profile information from server
   const fetchProfile = useCallback(async () => {
     try {
       const isFirstVisit = getLocalStorage("firstVisit");
-      if (isFirstVisit) {
-        setFirstCustomerVisit(true);
-      } else {
-        setFirstCustomerVisit(false);
-      }
-      setLoading(true);
+      setFirstCustomerVisit(!!isFirstVisit);
       const res = await getProfile();
       setUser(res.data);
       setIsAuthenticated(true);
@@ -97,7 +106,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // send phoneNumber for get verification code
   const handleSendCode = async (phone_number) => {
     try {
       setLoading(true);
@@ -111,13 +119,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Set First Visit
   const handleSetFirstVisit = () => {
     setLocalStorage("firstVisit", false);
     setFirstCustomerVisit(false);
   };
 
-  // confirm code
   const verifyCode = async (phone_number, code) => {
     try {
       setLoading(true);
@@ -140,44 +146,43 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Refresh the token manually
-  const refreshToken = async () => {
-    try {
-      const refresh = getRefreshToken();
-      if (!refresh) throw new Error("توکن رفرش موجود نیست");
-      const { data } = await refreshTokenRequest(refresh);
-      saveTokens(data.access, data.refresh);
-      return data.access;
-    } catch (err) {
-      logout();
-      throw err;
-    }
-  };
-
-  // exit
-  const logout = () => {
-    clearTokens();
-    setUser(null);
-    setIsAuthenticated(false);
-    setError(null);
-  };
-
-  // On initial app load, get the profile if we have a token
   useEffect(() => {
-    const access = getAccessToken();
-    if (access) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-      fetchProfile();
-    } else {
-      setIsAuthenticated(false);
-      setLoading(false);
-      if (getLocalStorage("firstVisit") === undefined) {
-        setFirstCustomerVisit(true);
-      } else {
-        setFirstCustomerVisit(getLocalStorage("firstVisit"));
+    const initializeAuth = async () => {
+      const access = getAccessToken();
+      const refresh = getRefreshToken();
+
+      if (!access && !refresh) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        const isFirst = getLocalStorage("firstVisit");
+        setFirstCustomerVisit(!!isFirst);
+        return;
       }
-    }
+
+      try {
+        if (access) {
+          axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+          await fetchProfile();
+        } else if (refresh) {
+          const newAccess = await refreshToken();
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${newAccess}`;
+          await fetchProfile();
+        }
+      } catch (err) {
+        clearTokens();
+        setIsAuthenticated(false);
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
   }, [fetchProfile]);
+
+  const updateUserDetails = (userData) => {
+    setUser(userData);
+  };
 
   return (
     <AuthContext.Provider
@@ -192,6 +197,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         firstCustomerVisit,
         handleSetFirstVisit,
+        updateUserDetails,
       }}
     >
       {children}

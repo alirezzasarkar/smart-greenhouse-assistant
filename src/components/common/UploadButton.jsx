@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-const UploadButton = ({ onUpload }) => {
-  const [uploadStatus, setUploadStatus] = useState(null); // null, 'success', or 'error'
-
+const UploadButton = ({ onUpload, uploadStatus }) => {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -12,16 +10,15 @@ const UploadButton = ({ onUpload }) => {
         file.type === "image/heic" ||
         file.type === "image/heif"
       ) {
-        setUploadStatus("success");
         if (onUpload) {
           const reader = new FileReader();
           reader.onload = () => {
-            onUpload(reader.result); // Pass the uploaded image data to the parent component
+            onUpload(reader.result);
           };
           reader.readAsDataURL(file);
         }
       } else {
-        setUploadStatus("error");
+        alert("نوع فایل فقط عکس میباشد");
       }
     }
   };

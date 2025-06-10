@@ -3,6 +3,7 @@ import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import { motion } from "framer-motion";
 import AuthContext from "../context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
@@ -72,6 +73,7 @@ const MainLayout = () => {
 
   return (
     <div className="flex flex-col h-full relative">
+      <Toaster />
       <header className="flex items-center justify-between px-4 py-2 bg-white">
         <button
           className="p-2 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-300"
