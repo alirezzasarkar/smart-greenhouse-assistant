@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import PhoneInput from "./PhoneInput";
 import Button from "../common/Button";
+import AuthContext from "../../context/AuthContext";
 
 const AuthForm = () => {
   const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
+  const { handleSendCode } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setPhone(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Phone Number:", phone);
-    navigate("/verify-code");
+    setError(null);
+    setLoading(true);
+    try {
+      await handleSendCode(phone); // ارسال شماره به API
+      navigate("/verify-code", { state: { phone } }); // ارسال شماره به صفحه تایید کد
+    } catch (err) {
+      setError(err?.response?.data?.message || "خطا در ارسال کد تایید");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,11 +48,15 @@ const AuthForm = () => {
         <PhoneInput value={phone} onChange={handleChange} />
         <Button
           type="submit"
+          disabled={loading || phone.trim().length === 0}
           className="bg-color text-white hover:bg-green-800 w-full mt-5"
         >
-          ادامه
+          {loading ? "در حال ارسال..." : "ادامه"}
         </Button>
       </form>
+      {error && (
+        <p className="text-red-600 text-center mt-4 text-sm">{error}</p>
+      )}
       <p className="mt-20 text-xs text-gray-400 text-center">
         ثبت‌نام و ورود شما به منزله قبول{" "}
         <a href="#" className="underline">

@@ -23,6 +23,7 @@ import SmartConsultant from "./pages/SmartConsultant";
 import SubscriptionRenewal from "./pages/SubscriptionRenewal";
 import AnalysisDetail from "./pages/AnalysisDetail";
 import LoadingPage from "./pages/Loading";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 /**
  * The main app component, which sets up the routes and a subscription modal
@@ -70,7 +71,14 @@ function App() {
         <Route path="/signup-login" element={<SignUpLoginPage />} />
         <Route path="/verify-code" element={<VerifyCodePage />} />
 
-        <Route path="/" element={<MainLayout />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<HomePage />} />
           <Route path="/plant-detection" element={<PlantDetection />} />
           <Route path="/profile" element={<UserProfile />} />
