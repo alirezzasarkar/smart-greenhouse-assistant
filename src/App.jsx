@@ -24,6 +24,7 @@ import SubscriptionRenewal from "./pages/SubscriptionRenewal";
 import AnalysisDetail from "./pages/AnalysisDetail";
 import LoadingPage from "./pages/Loading";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import AuthProtectedRoute from "./pages/AuthProtectedRoute";
 
 /**
  * The main app component, which sets up the routes and a subscription modal
@@ -68,7 +69,14 @@ function App() {
       )}
       <Routes>
         <Route path="/onboarding" element={<OnboardingPage />} />
-        <Route path="/signup-login" element={<SignUpLoginPage />} />
+        <Route
+          path="/signup-login"
+          element={
+            <AuthProtectedRoute>
+              <SignUpLoginPage />
+            </AuthProtectedRoute>
+          }
+        />
         <Route path="/verify-code" element={<VerifyCodePage />} />
 
         <Route
