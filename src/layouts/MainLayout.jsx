@@ -1,11 +1,20 @@
-import React, { useState } from "react";
-import { Link, useLocation, Outlet } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import { motion } from "framer-motion";
+import AuthContext from "../context/AuthContext";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/signup-login");
+    }
+  }, [isAuthenticated, navigate]);
 
   const tabs = [
     {

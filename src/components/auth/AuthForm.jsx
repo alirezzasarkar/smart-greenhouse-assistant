@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PhoneInput from "./PhoneInput";
 import Button from "../common/Button";
@@ -10,7 +10,17 @@ const AuthForm = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-  const { handleSendCode } = useContext(AuthContext);
+  const { handleSendCode, isAuthenticated, firstCustomerVisit } =
+    useContext(AuthContext);
+
+  useEffect(() => {
+    console.log(firstCustomerVisit);
+    if (firstCustomerVisit) {
+      navigate("/onboarding");
+    } else if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate, firstCustomerVisit]);
 
   const handleChange = (e) => {
     setPhone(e.target.value);

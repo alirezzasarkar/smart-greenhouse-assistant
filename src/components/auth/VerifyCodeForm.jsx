@@ -13,9 +13,16 @@ const VerifyCodeForm = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { verifyCode, handleSendCode } = useContext(AuthContext);
+  const { verifyCode, handleSendCode, isAuthenticated } =
+    useContext(AuthContext);
 
   const phone = location.state?.phone || "";
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     if (resendTimer > 0) {

@@ -1,6 +1,10 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import axios from "../api/axiosInstance";
 import { sendCode, refreshTokenRequest, getProfile } from "../api/usersApi";
+import {
+  getLocalStorage,
+  setLocalStorage,
+} from "../utils/helpers/localStorage";
 
 const AuthContext = createContext();
 
@@ -18,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [firstCustomerVisit, setFirstCustomerVisit] = useState(false);
 
   const saveTokens = (access, refresh) => {
     localStorage.setItem(ACCESS_TOKEN_KEY, access);
@@ -33,6 +38,9 @@ export const AuthProvider = ({ children }) => {
 
   const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN_KEY);
   const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN_KEY);
+
+  // is first visit
+  // useEffect(() => {}, []);
 
   // response interceptor
   useEffect(() => {
@@ -69,6 +77,12 @@ export const AuthProvider = ({ children }) => {
   // get profile information from server
   const fetchProfile = useCallback(async () => {
     try {
+      const isFirstVisit = getLocalStorage("firstVisit");
+      if (isFirstVisit) {
+        setFirstCustomerVisit(true);
+      } else {
+        setFirstCustomerVisit(false);
+      }
       setLoading(true);
       const res = await getProfile();
       setUser(res.data);
@@ -95,6 +109,12 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Set First Visit
+  const handleSetFirstVisit = () => {
+    setLocalStorage("firstVisit", false);
+    setFirstCustomerVisit(false);
   };
 
   // confirm code
@@ -148,6 +168,14 @@ export const AuthProvider = ({ children }) => {
     if (access) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
       fetchProfile();
+    } else {
+      setIsAuthenticated(false);
+      setLoading(false);
+      if (getLocalStorage("firstVisit") === undefined) {
+        setFirstCustomerVisit(true);
+      } else {
+        setFirstCustomerVisit(getLocalStorage("firstVisit"));
+      }
     }
   }, [fetchProfile]);
 
@@ -162,6 +190,8 @@ export const AuthProvider = ({ children }) => {
         verifyCode,
         refreshToken,
         logout,
+        firstCustomerVisit,
+        handleSetFirstVisit,
       }}
     >
       {children}

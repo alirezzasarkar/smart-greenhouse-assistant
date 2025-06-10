@@ -4,14 +4,9 @@ import AuthContext from "../context/AuthContext";
 import LoadingPage from "./Loading";
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useContext(AuthContext);
-  const [authenticated, setAuthenticated] = useState(true);
-  useEffect(() => {
-    setAuthenticated(isAuthenticated);
-  }, [isAuthenticated]);
+  const { loading } = useContext(AuthContext);
 
   if (loading) return <LoadingPage />;
-  else if (!authenticated) return <Navigate to="/signup-login" replace />;
 
   return children;
 };

@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import WelcomeSlide from "../components/onboarding/WelcomeSlide";
+import AuthContext from "../context/AuthContext";
 
 const Onboarding = () => {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
+  const { handleSetFirstVisit, firstCustomerVisit } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!firstCustomerVisit) {
+      navigate("/");
+    }
+  }, [firstCustomerVisit, navigate]);
 
   const slides = [
     {
@@ -40,6 +48,7 @@ const Onboarding = () => {
     if (step < slides.length - 1) {
       setStep(step + 1);
     } else {
+      handleSetFirstVisit();
       navigate("/signup-login");
     }
   };
