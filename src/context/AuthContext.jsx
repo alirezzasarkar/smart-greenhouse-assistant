@@ -5,6 +5,7 @@ import {
   getLocalStorage,
   setLocalStorage,
 } from "../utils/helpers/localStorage";
+import { isTokenExpired } from "../utils/helpers/isTokenExpired";
 
 const AuthContext = createContext();
 
@@ -49,7 +50,9 @@ export const AuthProvider = ({ children }) => {
   const refreshToken = async () => {
     try {
       const refresh = getRefreshToken();
-      if (!refresh) throw new Error("توکن رفرش موجود نیست");
+      if (!refresh || isTokenExpired(refresh)) {
+        throw new Error("توکن رفرش منقضی شده است");
+      }
       const { data } = await refreshTokenRequest(refresh);
       saveTokens(data.access, data.refresh);
       return data.access;
@@ -60,33 +63,42 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const responseInterceptor = axios.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        const originalRequest = error.config;
-        if (
-          error.response?.status === 401 &&
-          !originalRequest._retry &&
-          !originalRequest.url.includes("/users/auth/verify-code/")
-        ) {
-          originalRequest._retry = true;
-          try {
-            const newAccessToken = await refreshToken();
-            originalRequest.headers[
-              "Authorization"
-            ] = `Bearer ${newAccessToken}`;
-            return axios(originalRequest);
-          } catch (refreshError) {
-            return Promise.reject(refreshError);
-          }
-        }
-        return Promise.reject(error);
-      }
-    );
+    const initializeAuth = async () => {
+      const access = getAccessToken();
+      const refresh = getRefreshToken();
 
-    return () => {
-      axios.interceptors.response.eject(responseInterceptor);
+      const isFirst = getLocalStorage("firstVisit");
+      setFirstCustomerVisit(!!isFirst);
+
+      if (!access && !refresh) {
+        clearTokens();
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        if (!access || isTokenExpired(access)) {
+          if (refresh && !isTokenExpired(refresh)) {
+            await refreshToken();
+          } else {
+            throw new Error("هیچ توکن معتبری برای ورود وجود ندارد");
+          }
+        } else {
+          axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+        }
+
+        await fetchProfile();
+      } catch (err) {
+        clearTokens();
+        setIsAuthenticated(false);
+        setError(extractErrorMessage(err));
+      } finally {
+        setLoading(false);
+      }
     };
+
+    initializeAuth();
   }, []);
 
   const fetchProfile = useCallback(async () => {
