@@ -95,9 +95,9 @@ function App() {
         <Route
           path="/"
           element={
-            // <ProtectedRoute>
-            <MainLayout />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
           }
         >
           <Route index element={<HomePage />} />
