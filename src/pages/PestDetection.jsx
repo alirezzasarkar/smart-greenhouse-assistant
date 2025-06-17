@@ -6,68 +6,83 @@ import Question from "../components/common/Question";
 import Loader from "../components/common/Loader";
 const questions = [
   {
-    question: "محیط نگهداری گیاه کجاست؟",
-    name: "plantLocation",
+    question:
+      "آیا موردی از موارد زیر را در نزدیکی یا روی گیاه دیده‌اید؟ (می‌توانید چند گزینه را انتخاب کنید)",
+    name: "visibleSignsNearPlant",
     options: [
-      { label: "آپارتمان", value: "apartment" },
-      { label: "بالکن و تراس", value: "balcony_terrace" },
-      { label: "باغ", value: "garden" },
-      { label: "گلخانه", value: "greenhouse" },
+      { label: "حشرات کوچک قابل مشاهده", value: "visible_small_insects" },
+      {
+        label: "تار عنکبوت یا بافت نازک سفید",
+        value: "web_or_thin_white_layer",
+      },
+      {
+        label: "ذرات سفید یا سیاه روی برگ‌ها",
+        value: "white_or_black_particles",
+      },
+      { label: "تخم یا نقاط ریز روی سطح برگ", value: "eggs_or_spots_on_leaf" },
+      { label: "هیچ‌کدام از موارد بالا", value: "none_of_the_above" },
     ],
   },
   {
-    question: "وضعیت نور محیط نگهداری گل چگونه بود؟",
-    name: "lightType",
+    question: "آیا گیاهان دیگر نیز دچار این مشکل شده‌اند؟",
+    name: "otherPlantsAffected",
     options: [
-      { label: "نور مستقیم خورشید", value: "direct_sunlight" },
-      { label: "نور مصنوعی", value: "artificial_light" },
-      { label: "نور غیرمستقیم", value: "indirect_light" },
-      { label: "کم نور یا بدون نور", value: "low_or_no_light" },
+      {
+        label: "بله، چند گیاه دیگر هم آسیب دیده‌اند",
+        value: "multiple_plants_affected",
+      },
+      {
+        label: "فقط همین گیاه آسیب دیده است",
+        value: "only_this_plant_affected",
+      },
+      { label: "مطمئن نیستم", value: "not_sure" },
     ],
   },
   {
-    question: "دمای محیطی که گیاه نگهداری می‌شود معمولاً چقدر است؟",
-    name: "temperature",
+    question: "گیاه در چه شرایط محیطی نگهداری می‌شود؟",
+    name: "environmentCondition",
     options: [
-      { label: "زیر ۱۵ درجه", value: "below_15c" },
-      { label: "بین ۱۵ تا ۲۵ درجه", value: "15_to_25c" },
-      { label: "بالای ۲۵ درجه", value: "above_25c" },
-      { label: "متغیر بوده و مشخص نیست", value: "variable_unknown" },
+      {
+        label: "در فضای باز با نور مستقیم خورشید",
+        value: "outdoor_full_sunlight",
+      },
+      {
+        label: "در فضای باز اما در سایه یا نیم‌سایه",
+        value: "outdoor_partial_shade",
+      },
+      { label: "در گلخانه", value: "in_greenhouse" },
+      { label: "در فضای بسته (مثلاً داخل خانه)", value: "indoor_environment" },
+      { label: "سایر شرایط", value: "other_conditions" },
     ],
   },
   {
-    question: "آیا در خاک یا اطراف گیاه، حشرات یا لارو دیده‌اید؟",
-    name: "insectsPresent",
+    question:
+      "آیا اخیراً از یکی از موارد زیر استفاده کرده‌اید؟ (می‌توانید چند گزینه را انتخاب کنید)",
+    name: "recentUsages",
     options: [
-      { label: "بله", value: "yes" },
-      { label: "خیر", value: "no" },
+      { label: "کود شیمیایی", value: "chemical_fertilizer" },
+      {
+        label: "کود طبیعی یا ورمی‌کمپوست",
+        value: "natural_fertilizer_or_vermicompost",
+      },
+      { label: "سم یا آفت‌کش", value: "pesticide_or_insecticide" },
+      {
+        label: "آب با تغییرات خاص (مثلاً آب شور، کلردار، باران)",
+        value: "water_with_special_conditions",
+      },
+      { label: "خیر، هیچ‌کدام", value: "none" },
     ],
   },
   {
-    question: "زه‌کشی گلدان چگونه است؟",
-    name: "drainage",
+    question:
+      "کدام قسمت‌های گیاه بیشتر آسیب‌دیده‌اند؟ (می‌توانید چند گزینه را انتخاب کنید)",
+    name: "damagedPlantParts",
     options: [
-      { label: "خوب است، آب اضافی خارج می‌شود", value: "good_drainage" },
-      { label: "متوسط است", value: "average_drainage" },
-      { label: "ضعیف یا بدون خروج آب", value: "poor_drainage" },
-    ],
-  },
-  {
-    question: "آیا اخیراً گیاه را جابه‌جا کرده‌اید یا گلدانش را عوض کرده‌اید؟",
-    name: "recentTransplant",
-    options: [
-      { label: "بله", value: "yes" },
-      { label: "خیر", value: "no" },
-    ],
-  },
-  {
-    question: "آیا اخیراً به عنوان تقویتی از آفت‌کش استفاده کرده‌اید؟",
-    name: "pesticideUsage",
-    options: [
-      { label: "در یک ماه گذشته", value: "within_1_month" },
-      { label: "بین ۱ تا ۳ ماه گذشته", value: "between_1_and_3_months" },
-      { label: "بیشتر از ۳ ماه گذشته", value: "more_than_3_months" },
-      { label: "اصلاً استفاده نکرده‌ام", value: "never_used" },
+      { label: "برگ‌ها", value: "leaves" },
+      { label: "ساقه‌ها", value: "stems" },
+      { label: "گل‌ها", value: "flowers" },
+      { label: "ریشه (در صورت مشاهده)", value: "roots" },
+      { label: "نمی‌توان تشخیص داد", value: "cannot_determine" },
     ],
   },
 ];

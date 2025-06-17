@@ -11,11 +11,11 @@ const MainLayout = () => {
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/signup-login");
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/signup-login");
+  //   }
+  // }, [isAuthenticated, navigate]);
 
   const tabs = [
     {
