@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const UploadButton = ({ onUpload, uploadStatus }) => {
   const handleFileUpload = (event) => {
@@ -18,7 +19,7 @@ const UploadButton = ({ onUpload, uploadStatus }) => {
           reader.readAsDataURL(file);
         }
       } else {
-        alert("نوع فایل فقط عکس میباشد");
+        toast.error("نوع فایل فقط عکس میباشد");
       }
     }
   };
