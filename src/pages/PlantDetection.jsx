@@ -18,10 +18,12 @@ const PlantDetection = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [imageUploadStatus, setImageUploadStatus] = useState(null);
   const [error, setError] = useState("");
 
   const handleUpload = (image) => {
     setUploadedImage(image);
+    setImageUploadStatus("success");
     setError("");
   };
 
@@ -54,7 +56,7 @@ const PlantDetection = () => {
         />
       </div>
 
-      <UploadButton onUpload={handleUpload} />
+      <UploadButton onUpload={handleUpload} uploadStatus={imageUploadStatus} />
 
       {error && <p className="text-red-500 mt-4">{error}</p>}
 

@@ -4,6 +4,7 @@ import Question from "../components/common/Question";
 import Dropdown from "../components/common/Dropdown";
 import Loader from "../components/common/Loader";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const questions = [
   {
@@ -62,10 +63,6 @@ const questions = [
 
 const plantOptions = ["آلوئه‌ورا", "زامیفولیا", "آگلونما", "گل محمدی"];
 
-const handleQuestionChange = (e) => {
-  console.log(e.target.name, e.target.value);
-};
-
 /**
  * FertilizerDetection component provides an interface for users to select
  * a plant and get fertilizer recommendations. It includes a dropdown for
@@ -81,15 +78,24 @@ const FertilizerDetection = () => {
   const [result, setResult] = useState("");
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [error, setError] = useState("");
+  const [formData, setFormData] = useState({});
 
   const handleDropdownChange = (selectedOption) => {
     setSelectedPlant(selectedOption);
     setError("");
   };
 
+  const handleQuestionChange = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleResultClick = () => {
     if (!selectedPlant) {
       setError("لطفاً ابتدا یک گیاه انتخاب کنید.");
+      toast.error("لطفاً ابتدا یک گیاه انتخاب کنید.");
       return;
     }
     setLoading(true);
@@ -149,6 +155,7 @@ const FertilizerDetection = () => {
             question={q.question}
             options={q.options}
             name={q.name}
+            value={formData[q.name]}
             onChange={handleQuestionChange}
           />
         ))}

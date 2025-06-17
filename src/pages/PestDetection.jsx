@@ -4,11 +4,13 @@ import ResultButton from "../components/common/ResultButton";
 import Description from "../components/common/Description";
 import Question from "../components/common/Question";
 import Loader from "../components/common/Loader";
+import toast from "react-hot-toast";
 const questions = [
   {
     question:
       "آیا موردی از موارد زیر را در نزدیکی یا روی گیاه دیده‌اید؟ (می‌توانید چند گزینه را انتخاب کنید)",
     name: "visibleSignsNearPlant",
+    kind: "multi",
     options: [
       { label: "حشرات کوچک قابل مشاهده", value: "visible_small_insects" },
       {
@@ -59,6 +61,7 @@ const questions = [
     question:
       "آیا اخیراً از یکی از موارد زیر استفاده کرده‌اید؟ (می‌توانید چند گزینه را انتخاب کنید)",
     name: "recentUsages",
+    kind: "multi",
     options: [
       { label: "کود شیمیایی", value: "chemical_fertilizer" },
       {
@@ -77,6 +80,7 @@ const questions = [
     question:
       "کدام قسمت‌های گیاه بیشتر آسیب‌دیده‌اند؟ (می‌توانید چند گزینه را انتخاب کنید)",
     name: "damagedPlantParts",
+    kind: "multi",
     options: [
       { label: "برگ‌ها", value: "leaves" },
       { label: "ساقه‌ها", value: "stems" },
@@ -86,10 +90,6 @@ const questions = [
     ],
   },
 ];
-
-const handleQuestionChange = (e) => {
-  console.log(e.target.name, e.target.value);
-};
 
 /**
  * The PestDetection component provides an interface for users to upload a
@@ -105,16 +105,27 @@ const PestDetection = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [imageUploadStatus, setImageUploadStatus] = useState(null);
   const [error, setError] = useState("");
+  const [formData, setFormData] = useState({});
 
   const handleUpload = (image) => {
     setUploadedImage(image);
+    setImageUploadStatus("success");
     setError("");
+  };
+
+  const handleQuestionChange = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleResultClick = () => {
     if (!uploadedImage) {
       setError("لطفاً ابتدا یک تصویر آپلود کنید.");
+      toast.error("لطفاً ابتدا یک تصویر آپلود کنید.");
       return;
     }
     setLoading(true);
@@ -137,7 +148,7 @@ const PestDetection = () => {
           className="rounded-lg shadow-md"
         />
       </div>
-      <UploadButton onUpload={handleUpload} />
+      <UploadButton onUpload={handleUpload} uploadStatus={imageUploadStatus} />
       {error && <p className="text-red-500 text-center mt-4">{error}</p>}
       <Description
         text={
@@ -172,10 +183,12 @@ const PestDetection = () => {
       <div className="mt-10">
         {questions.map((q, index) => (
           <Question
+            kind={q.kind}
             key={index}
             question={q.question}
             options={q.options}
             name={q.name}
+            value={formData[q.name]}
             onChange={handleQuestionChange}
           />
         ))}

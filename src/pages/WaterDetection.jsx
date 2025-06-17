@@ -4,6 +4,7 @@ import Description from "../components/common/Description";
 import Question from "../components/common/Question";
 import Dropdown from "../components/common/Dropdown";
 import Loader from "../components/common/Loader";
+import toast from "react-hot-toast";
 
 const questions = [
   {
@@ -57,10 +58,6 @@ const questions = [
 
 const plantOptions = ["آلوئه‌ورا", "زامیفولیا", "آگلونما", "گل محمدی"];
 
-const handleQuestionChange = (e) => {
-  console.log(e.target.name, e.target.value);
-};
-
 /**
  * WaterDetection component provides an interface for users to select a plant
  * and receive care instructions. The component includes a dropdown for plant
@@ -75,10 +72,19 @@ const WaterDetection = () => {
   const [result, setResult] = useState("");
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [error, setError] = useState("");
+  const [formData, setFormData] = useState({});
+
+  const handleQuestionChange = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleResultClick = () => {
     if (!selectedPlant) {
       setError("لطفاً یک گیاه انتخاب کنید.");
+      toast.error("لطفاً یک گیاه انتخاب کنید.");
       return;
     }
 
@@ -138,6 +144,7 @@ const WaterDetection = () => {
             question={q.question}
             options={q.options}
             name={q.name}
+            value={formData[q.name]}
             onChange={handleQuestionChange}
           />
         ))}
