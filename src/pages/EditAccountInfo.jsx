@@ -57,18 +57,34 @@ const EditAccountInfo = () => {
       return;
     }
 
-    try {
-      const response = await updateProfile(formData);
-      updateUserDetails(response.data);
-      toast.success("پروفایل با موفقیت بروزرسانی شد");
-    } catch (err) {
-      if (err.code === "token_not_valid") {
-        await refreshToken();
-        toast.error("لطفا 10 ثانیه بعد مجدد تلاش کنید");
-      }
-      console.error("Error updating profile:", err);
-      toast.error("خطایی پیش آمده");
-    }
+    toast.promise(updateProfile(formData), {
+      loading: "درحال بروزرسانی اطلاعات . . .",
+      success: (response) => {
+        updateUserDetails(response.data);
+        return "پروفایل با موفقیت بروزرسانی شد";
+      },
+      error: (err) => {
+        if (err.code === "token_not_valid") {
+          refreshToken();
+          toast.error("لطفا 10 ثانیه بعد مجدد تلاش کنید");
+        }
+        console.error("Error updating profile:", err);
+        toast.error("خطایی پیش آمده");
+      },
+    });
+
+    // try {
+    //   const response = await updateProfile(formData);
+    //   updateUserDetails(response.data);
+    //   toast.success("پروفایل با موفقیت بروزرسانی شد");
+    // } catch (err) {
+    //   if (err.code === "token_not_valid") {
+    //     await refreshToken();
+    //     toast.error("لطفا 10 ثانیه بعد مجدد تلاش کنید");
+    //   }
+    //   console.error("Error updating profile:", err);
+    //   toast.error("خطایی پیش آمده");
+    // }
   };
 
   return (

@@ -11,7 +11,7 @@ const VerifyCodeInput = ({ value, onChange }) => {
     const newCode = [...code];
     newCode[index] = e.target.value.slice(-1);
     setCode(newCode);
-    if (e.target.value && index < 3) {
+    if (e.target.value && index < 4) {
       document.getElementsByName(`code-${index + 1}`)[0].focus();
     }
   };
