@@ -2,7 +2,7 @@
 import axios from "./axiosInstance";
 
 export const detectPest = (formData) =>
-  axios.post("/pests/detect", formData, {
+  axios.post("/pests/detect/", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

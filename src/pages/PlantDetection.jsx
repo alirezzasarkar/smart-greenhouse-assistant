@@ -46,7 +46,6 @@ const PlantDetection = () => {
     toast.promise(detectPlant(formData), {
       loading: "درحال پردازش تصویر . . .",
       success: (res) => {
-        console.log(res.data);
         setResult(res.data.result);
         setLoading(false);
       },

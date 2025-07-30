@@ -194,10 +194,15 @@ const PestDetection = () => {
     const imageUrl = URL.createObjectURL(uploadedImage);
     setPreviewUrl(imageUrl);
 
+    const startTime = performance.now();
+
     toast.promise(detectPest(formDataToSend), {
       loading: "درحال پردازش تصویر و اطلاعات . . .",
       success: (res) => {
-        console.log(res.data);
+        const endTime = performance.now();
+        const duration = endTime - startTime;
+
+        console.log(`⏱️ زمان پاسخ سرور: ${duration.toFixed(2)} میلی‌ثانیه`);
         setResult(res.data.result);
         setLoading(false);
       },

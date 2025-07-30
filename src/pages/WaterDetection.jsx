@@ -117,7 +117,6 @@ const WaterDetection = () => {
       {
         loading: "درحال تحلیل اطلاعات . . .",
         success: (res) => {
-          console.log(res.data);
           setResult(res.data.result);
           setLoading(false);
         },

@@ -122,18 +122,6 @@ const FertilizerDetection = () => {
     setLoading(true);
     setResult("");
 
-    // const answersArray = Object.entries(formData).map(([key, value]) => ({
-    //   [key]: value,
-    // }));
-
-    // console.log(answersArray);
-
-    // const cleanedFormData = {};
-    // for (const key of Object.keys(formData)) {
-    //   const value = formData[key];
-    //   cleanedFormData[key] = value && value !== "" ? value : "تعیین‌ نشده";
-    // }
-
     toast.promise(
       createFertilizerDetection({
         plant_name: selectedPlant,
@@ -142,7 +130,6 @@ const FertilizerDetection = () => {
       {
         loading: "درحال تحلیل اطلاعات . . .",
         success: (res) => {
-          console.log(res.data);
           setResult(res.data.result);
           setLoading(false);
         },
