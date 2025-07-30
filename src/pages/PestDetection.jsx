@@ -5,11 +5,38 @@ import Description from "../components/common/Description";
 import Question from "../components/common/Question";
 import Loader from "../components/common/Loader";
 import toast from "react-hot-toast";
+import base64ToFile from "../utils/base64ToFile";
+import { detectPest } from "../api/pestsApi";
 const questions = [
+  {
+    question: "چه مدت است این علائم را روی گیاه مشاهده می‌کنید؟",
+    name: "symptom_duration",
+    options: [
+      { label: "کمتر از ۳ روز", value: "less_than_3_days" },
+      { label: "حدود یک هفته", value: "around_one_week" },
+      { label: "بین ۱ تا ۲ هفته", value: "between_1_and_2_weeks" },
+      { label: "بیشتر از دو هفته", value: "more_than_2_weeks" },
+      { label: "نمی‌دانم", value: "not_sure" },
+    ],
+  },
+  {
+    question:
+      "کدام‌یک از علائم زیر را روی گیاه مشاهده می‌کنید؟ (می‌توانید چند گزینه را انتخاب کنید)",
+    name: "visible_symptoms",
+    kind: "multi",
+    options: [
+      { label: "تغییر رنگ برگ‌ها", value: "leaf_discoloration" },
+      { label: "پیچ‌خوردگی برگ‌ها", value: "leaf_curling" },
+      { label: "ریزش برگ", value: "leaf_drop" },
+      { label: "ایجاد لکه روی برگ یا ساقه", value: "spots_on_leaf_or_stem" },
+      { label: "رشد ناقص یا توقف رشد", value: "stunted_growth" },
+      { label: "علائمی مشاهده نمی‌شود", value: "no_symptoms" },
+    ],
+  },
   {
     question:
       "آیا موردی از موارد زیر را در نزدیکی یا روی گیاه دیده‌اید؟ (می‌توانید چند گزینه را انتخاب کنید)",
-    name: "visibleSignsNearPlant",
+    name: "environmental_signs",
     kind: "multi",
     options: [
       { label: "حشرات کوچک قابل مشاهده", value: "visible_small_insects" },
@@ -27,7 +54,7 @@ const questions = [
   },
   {
     question: "آیا گیاهان دیگر نیز دچار این مشکل شده‌اند؟",
-    name: "otherPlantsAffected",
+    name: "other_plants_affected",
     options: [
       {
         label: "بله، چند گیاه دیگر هم آسیب دیده‌اند",
@@ -42,7 +69,7 @@ const questions = [
   },
   {
     question: "گیاه در چه شرایط محیطی نگهداری می‌شود؟",
-    name: "environmentCondition",
+    name: "environment_conditions",
     options: [
       {
         label: "در فضای باز با نور مستقیم خورشید",
@@ -60,7 +87,7 @@ const questions = [
   {
     question:
       "آیا اخیراً از یکی از موارد زیر استفاده کرده‌اید؟ (می‌توانید چند گزینه را انتخاب کنید)",
-    name: "recentUsages",
+    name: "recent_interventions",
     kind: "multi",
     options: [
       { label: "کود شیمیایی", value: "chemical_fertilizer" },
@@ -79,7 +106,7 @@ const questions = [
   {
     question:
       "کدام قسمت‌های گیاه بیشتر آسیب‌دیده‌اند؟ (می‌توانید چند گزینه را انتخاب کنید)",
-    name: "damagedPlantParts",
+    name: "damaged_parts",
     kind: "multi",
     options: [
       { label: "برگ‌ها", value: "leaves" },
@@ -107,9 +134,23 @@ const PestDetection = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [imageUploadStatus, setImageUploadStatus] = useState(null);
   const [error, setError] = useState("");
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    symptom_duration: "",
+    visible_symptoms: "",
+    environmental_signs: "",
+    other_plants_affected: "",
+    environment_conditions: "",
+    recent_interventions: "",
+    damaged_parts: "",
+  });
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const handleUpload = (image) => {
+    if (!(image instanceof File)) {
+      toast.error("فایل نامعتبر است");
+      return;
+    }
+    console.log(image);
     setUploadedImage(image);
     setImageUploadStatus("success");
     setError("");
@@ -124,18 +165,48 @@ const PestDetection = () => {
 
   const handleResultClick = () => {
     if (!uploadedImage) {
-      setError("لطفاً ابتدا یک تصویر آپلود کنید.");
       toast.error("لطفاً ابتدا یک تصویر آپلود کنید.");
       return;
     }
+
+    const emptyFields = Object.entries(formData).filter(([key, value]) => {
+      if (Array.isArray(value)) return value.length === 0;
+      return !value || value.trim() === "";
+    });
+
+    if (emptyFields.length > 0) {
+      toast.error(
+        "لطفاً تمام گزینه‌ها را تکمیل کنید. پر کردن همه‌ی فیلدها الزامی است."
+      );
+      return;
+    }
+
     setLoading(true);
     setResult("");
-    setTimeout(() => {
-      setLoading(false);
-      setResult(
-        "شناسایی گیاه با موفقیت انجام شد. گیاه شما از خانواده گیاهان آپارتمانی است و نیاز به نور متوسط و آبیاری منظم دارد. این گیاه در شرایط دمایی بین ۱۸ تا ۲۵ درجه سانتی‌گراد بهترین رشد را دارد. همچنین، توصیه می‌شود هر دو هفته یک‌بار از کود مخصوص گیاهان آپارتمانی استفاده کنید. در صورت مشاهده زردی برگ‌ها، ممکن است گیاه شما دچار کمبود مواد مغذی باشد. لطفاً تصویر گیاه خود را بررسی کنید و در صورت نیاز به اطلاعات بیشتر، با کارشناسان ما تماس بگیرید."
-      );
-    }, 5000);
+
+    const formDataToSend = new FormData();
+
+    formDataToSend.append("image", uploadedImage);
+
+    const answers = { ...formData };
+    formDataToSend.append("answers", JSON.stringify(answers));
+
+    const imageUrl = URL.createObjectURL(uploadedImage);
+    setPreviewUrl(imageUrl);
+
+    toast.promise(detectPest(formDataToSend), {
+      loading: "درحال پردازش تصویر و اطلاعات . . .",
+      success: (res) => {
+        console.log(res.data);
+        setResult(res.data.result);
+        setLoading(false);
+      },
+      error: (err) => {
+        console.log(err);
+        setLoading(false);
+        return "خطایی در سرور پیش آمده";
+      },
+    });
   };
 
   return (
@@ -199,7 +270,7 @@ const PestDetection = () => {
         <>
           <ResultButton onClick={handleResultClick} />
 
-          {result && (
+          {/* {result && (
             <div className="mt-20 text-center">
               <h3 className="mb-5 text-color">نتایج تشخیص آفات گیاه شما</h3>
               <img
@@ -208,6 +279,34 @@ const PestDetection = () => {
                 className="rounded-lg shadow-md w-full max-w-sm"
               />
               <p className="text-gray-700 mt-10 text-justify">{result}</p>
+            </div>
+          )} */}
+          {result && (
+            <div className="mt-20 text-right space-y-4 max-w-2xl mx-auto">
+              <h3 className="mb-5 text-color">نتایج تشخیص آفات گیاه شما</h3>
+              {previewUrl && (
+                <img
+                  src={previewUrl}
+                  alt="Uploaded Plant"
+                  className="rounded-lg shadow-md w-full max-w-sm"
+                />
+              )}
+
+              {result.split("\n\n").map((section, index) => {
+                const [title, ...rest] = section.split(":");
+                const content = rest.join(":").trim();
+                return (
+                  <div
+                    key={index}
+                    className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-200"
+                  >
+                    <strong className="text-green-800">{title.trim()}:</strong>
+                    <p className="text-gray-700 mt-2 leading-relaxed whitespace-pre-line">
+                      {content}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           )}
         </>

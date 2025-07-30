@@ -3,6 +3,8 @@ import UploadButton from "../components/common/UploadButton";
 import ResultButton from "../components/common/ResultButton";
 import Description from "../components/common/Description";
 import Loader from "../components/common/Loader";
+import toast from "react-hot-toast";
+import { detectPlant } from "../api/plantsApi";
 
 /**
  * PlantDetection component provides an interface for users to upload an image
@@ -20,6 +22,7 @@ const PlantDetection = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [imageUploadStatus, setImageUploadStatus] = useState(null);
   const [error, setError] = useState("");
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const handleUpload = (image) => {
     setUploadedImage(image);
@@ -34,12 +37,25 @@ const PlantDetection = () => {
     }
     setLoading(true);
     setResult("");
-    setTimeout(() => {
-      setLoading(false);
-      setResult(
-        "شناسایی گیاه با موفقیت انجام شد. گیاه شما از خانواده گیاهان آپارتمانی است و نیاز به نور متوسط و آبیاری منظم دارد. این گیاه در شرایط دمایی بین ۱۸ تا ۲۵ درجه سانتی‌گراد بهترین رشد را دارد. همچنین، توصیه می‌شود هر دو هفته یک‌بار از کود مخصوص گیاهان آپارتمانی استفاده کنید. در صورت مشاهده زردی برگ‌ها، ممکن است گیاه شما دچار کمبود مواد مغذی باشد. لطفاً تصویر گیاه خود را بررسی کنید و در صورت نیاز به اطلاعات بیشتر، با کارشناسان ما تماس بگیرید."
-      );
-    }, 5000);
+
+    const formData = new FormData();
+    formData.append("image", uploadedImage);
+    const imageUrl = URL.createObjectURL(uploadedImage);
+    setPreviewUrl(imageUrl);
+
+    toast.promise(detectPlant(formData), {
+      loading: "درحال پردازش تصویر . . .",
+      success: (res) => {
+        console.log(res.data);
+        setResult(res.data.result);
+        setLoading(false);
+      },
+      error: (err) => {
+        console.log(err);
+        setLoading(false);
+        return "خطایی در سرور پیش آمده";
+      },
+    });
   };
 
   return (
@@ -90,14 +106,31 @@ const PlantDetection = () => {
           <ResultButton onClick={handleResultClick} />
 
           {result && (
-            <div className="mt-20 text-center">
+            <div className="mt-20 text-right space-y-4 max-w-2xl mx-auto">
               <h3 className="mb-5 text-color">نتایج تشخیص گیاه شما</h3>
-              <img
-                src={uploadedImage}
-                alt="Uploaded Plant"
-                className="rounded-lg shadow-md w-full max-w-sm"
-              />
-              <p className="text-gray-700 mt-10 text-justify">{result}</p>
+              {previewUrl && (
+                <img
+                  src={previewUrl}
+                  alt="Uploaded Plant"
+                  className="rounded-lg shadow-md w-full max-w-sm"
+                />
+              )}
+
+              {result.split("\n\n").map((section, index) => {
+                const [title, ...rest] = section.split(":");
+                const content = rest.join(":").trim();
+                return (
+                  <div
+                    key={index}
+                    className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-200"
+                  >
+                    <strong className="text-green-800">{title.trim()}:</strong>
+                    <p className="text-gray-700 mt-2 leading-relaxed whitespace-pre-line">
+                      {content}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           )}
         </>

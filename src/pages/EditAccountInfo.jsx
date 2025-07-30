@@ -22,21 +22,27 @@ const EditAccountInfo = () => {
     phone_number: "",
     email: "",
     usage_type: "",
+    image: "",
   });
 
   useEffect(() => {
-    const { first_name, last_name, phone_number, usage_type, email } = user;
+    const { first_name, last_name, phone_number, usage_type, email, image } =
+      user;
     setFormData({
       first_name,
       last_name,
       phone_number,
       email,
       usage_type,
+      image,
     });
   }, [user]);
 
   const onUpload = async (image) => {
-    console.log(image);
+    setFormData((prev) => ({
+      ...prev,
+      image,
+    }));
     setUploadStatus("success");
   };
 
@@ -57,7 +63,17 @@ const EditAccountInfo = () => {
       return;
     }
 
-    toast.promise(updateProfile(formData), {
+    const finalFormData = new FormData();
+    finalFormData.append("first_name", formData.first_name);
+    finalFormData.append("last_name", formData.last_name);
+    finalFormData.append("phone_number", formData.phone_number);
+    finalFormData.append("email", formData.email);
+    finalFormData.append("usage_type", JSON.stringify(formData.usage_type));
+    if (formData.image instanceof File) {
+      finalFormData.append("image", formData.image);
+    }
+
+    toast.promise(updateProfile(finalFormData), {
       loading: "درحال بروزرسانی اطلاعات . . .",
       success: (response) => {
         updateUserDetails(response.data);
@@ -72,19 +88,6 @@ const EditAccountInfo = () => {
         toast.error("خطایی پیش آمده");
       },
     });
-
-    // try {
-    //   const response = await updateProfile(formData);
-    //   updateUserDetails(response.data);
-    //   toast.success("پروفایل با موفقیت بروزرسانی شد");
-    // } catch (err) {
-    //   if (err.code === "token_not_valid") {
-    //     await refreshToken();
-    //     toast.error("لطفا 10 ثانیه بعد مجدد تلاش کنید");
-    //   }
-    //   console.error("Error updating profile:", err);
-    //   toast.error("خطایی پیش آمده");
-    // }
   };
 
   return (

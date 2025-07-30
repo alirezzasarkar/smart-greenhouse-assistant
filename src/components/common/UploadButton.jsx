@@ -12,11 +12,12 @@ const UploadButton = ({ onUpload, uploadStatus }) => {
         file.type === "image/heif"
       ) {
         if (onUpload) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            onUpload(reader.result);
-          };
-          reader.readAsDataURL(file);
+          // const reader = new FileReader();
+          // reader.onload = () => {
+          //   onUpload(reader.result);
+          // };
+          // reader.readAsDataURL(file);
+          onUpload(file);
         }
       } else {
         toast.error("نوع فایل فقط عکس میباشد");

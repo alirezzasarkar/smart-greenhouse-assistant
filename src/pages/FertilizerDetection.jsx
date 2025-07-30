@@ -5,11 +5,15 @@ import Dropdown from "../components/common/Dropdown";
 import Loader from "../components/common/Loader";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import {
+  createFertilizerDetection,
+  getFertilizerDetections,
+} from "../api/fertilizerApi";
 
 const questions = [
   {
     question: "هدف شما از کوددهی به این گیاه چیست؟",
-    name: "fertilizationGoal",
+    name: "goal",
     options: [
       { label: "رشد سریع‌تر و پرپشت شدن", value: "faster_growth_and_density" },
       { label: "گل‌دهی بیشتر", value: "more_flowering" },
@@ -23,7 +27,7 @@ const questions = [
   },
   {
     question: "گیاه در کجا نگهداری می‌شود؟",
-    name: "plantEnvironment",
+    name: "location",
     options: [
       { label: "فضای باز (باغچه، مزرعه)", value: "outdoor_garden_farm" },
       { label: "گلخانه", value: "greenhouse" },
@@ -32,7 +36,7 @@ const questions = [
   },
   {
     question: "در حال حاضر گیاه در چه مرحله‌ای است؟",
-    name: "currentGrowthStage",
+    name: "growth_stage",
     options: [
       { label: "نهال یا تازه کاشته شده", value: "seedling" },
       { label: "در حال رشد برگ و ساقه", value: "leafy_growth" },
@@ -43,7 +47,7 @@ const questions = [
   },
   {
     question: "آیا از قبل کود خاصی استفاده کرده‌اید؟",
-    name: "previousFertilizerUse",
+    name: "prior_fertilizer",
     options: [
       { label: "بله، کود شیمیایی", value: "used_chemical" },
       { label: "بله، کود آلی یا ورمی‌کمپوست", value: "used_organic" },
@@ -52,7 +56,7 @@ const questions = [
   },
   {
     question: "چه نوع کودی ترجیح می‌دهید؟",
-    name: "preferredFertilizerType",
+    name: "preferred_type",
     options: [
       { label: "کود طبیعی یا ارگانیک", value: "organic" },
       { label: "کود شیمیایی با تأثیر سریع", value: "chemical_fast" },
@@ -78,7 +82,13 @@ const FertilizerDetection = () => {
   const [result, setResult] = useState("");
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [error, setError] = useState("");
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    goal: "",
+    location: "",
+    growth_stage: "",
+    prior_fertilizer: "",
+    preferred_type: "",
+  });
 
   const handleDropdownChange = (selectedOption) => {
     setSelectedPlant(selectedOption);
@@ -98,14 +108,58 @@ const FertilizerDetection = () => {
       toast.error("لطفاً ابتدا یک گیاه انتخاب کنید.");
       return;
     }
+    const emptyFields = Object.entries(formData).filter(
+      ([key, value]) => !value || value.trim() === ""
+    );
+
+    if (emptyFields.length > 0) {
+      toast.error(
+        "لطفاً تمام گزینه‌ها را تکمیل کنید. پر کردن همه‌ی فیلدها الزامی است."
+      );
+      return;
+    }
+
     setLoading(true);
     setResult("");
-    setTimeout(() => {
-      setLoading(false);
-      setResult(
-        "شناسایی گیاه با موفقیت انجام شد. گیاه شما از خانواده گیاهان آپارتمانی است و نیاز به نور متوسط و آبیاری منظم دارد. این گیاه در شرایط دمایی بین ۱۸ تا ۲۵ درجه سانتی‌گراد بهترین رشد را دارد. همچنین، توصیه می‌شود هر دو هفته یک‌بار از کود مخصوص گیاهان آپارتمانی استفاده کنید. در صورت مشاهده زردی برگ‌ها، ممکن است گیاه شما دچار کمبود مواد مغذی باشد. لطفاً تصویر گیاه خود را بررسی کنید و در صورت نیاز به اطلاعات بیشتر، با کارشناسان ما تماس بگیرید."
-      );
-    }, 5000);
+
+    // const answersArray = Object.entries(formData).map(([key, value]) => ({
+    //   [key]: value,
+    // }));
+
+    // console.log(answersArray);
+
+    // const cleanedFormData = {};
+    // for (const key of Object.keys(formData)) {
+    //   const value = formData[key];
+    //   cleanedFormData[key] = value && value !== "" ? value : "تعیین‌ نشده";
+    // }
+
+    toast.promise(
+      createFertilizerDetection({
+        plant_name: selectedPlant,
+        answers: formData,
+      }),
+      {
+        loading: "درحال تحلیل اطلاعات . . .",
+        success: (res) => {
+          console.log(res.data);
+          setResult(res.data.result);
+          setLoading(false);
+        },
+        error: (err) => {
+          console.log(err);
+          setLoading(false);
+          setError("خطایی در سرور پیش آمده");
+          return "خطایی در سرور رخ داده";
+        },
+      }
+    );
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   setResult(
+    //     "شناسایی گیاه با موفقیت انجام شد. گیاه شما از خانواده گیاهان آپارتمانی است و نیاز به نور متوسط و آبیاری منظم دارد. این گیاه در شرایط دمایی بین ۱۸ تا ۲۵ درجه سانتی‌گراد بهترین رشد را دارد. همچنین، توصیه می‌شود هر دو هفته یک‌بار از کود مخصوص گیاهان آپارتمانی استفاده کنید. در صورت مشاهده زردی برگ‌ها، ممکن است گیاه شما دچار کمبود مواد مغذی باشد. لطفاً تصویر گیاه خود را بررسی کنید و در صورت نیاز به اطلاعات بیشتر، با کارشناسان ما تماس بگیرید."
+    //   );
+    // }, 5000);
   };
 
   return (
@@ -146,7 +200,7 @@ const FertilizerDetection = () => {
       </div>
 
       {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
-      <Description text="برای دقت بیشتر در پاسخ دریافتی، لطفاً به سوالات زیر پاسخ دهید. (پاسخ‌گویی اختیاری است)" />
+      <Description text="برای دقت بیشتر در پاسخ دریافتی، لطفاً به سوالات زیر پاسخ دهید." />
 
       <div className="mt-6">
         {questions.map((q, index) => (
@@ -163,10 +217,26 @@ const FertilizerDetection = () => {
       <Description text="با توجه به مرحله رشد گیاه و محیط نگهداری انتخاب‌شده، سیستم هوش مصنوعی ما با بررسی ویژگی‌های تغذیه‌ای این گیاه، بهترین نوع کود را برای رشد سالم و بهینه پیشنهاد می‌دهد. این توصیه بر اساس منابع علمی، تجربیات کشاورزی و تحلیل دقیق داده‌های گیاهی طراحی شده است. به نتیجه اعتماد کنید گیاه شما در مسیر رشد بهتر قرار دارد." />
       {loading ? <Loader /> : <ResultButton onClick={handleResultClick} />}
       {result && (
-        <div className="mt-20 text-center">
-          <h3 className="mb-5 text-color">نتایج تشخیص کود مناسب گیاه شما</h3>
+        <div className="mt-20 text-right space-y-4 max-w-2xl mx-auto">
+          <h3 className="mb-5 text-lg font-bold text-green-700">
+            نتایج تشخیص کود مناسب گیاه شما
+          </h3>
 
-          <p className="text-gray-700 mt-10 text-justify">{result}</p>
+          {result.split("\n\n").map((section, index) => {
+            const [title, ...rest] = section.split(":");
+            const content = rest.join(":").trim();
+            return (
+              <div
+                key={index}
+                className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-200"
+              >
+                <strong className="text-green-800">{title.trim()}:</strong>
+                <p className="text-gray-700 mt-2 leading-relaxed whitespace-pre-line">
+                  {content}
+                </p>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

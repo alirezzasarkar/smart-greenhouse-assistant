@@ -101,34 +101,110 @@ function App() {
           }
         >
           <Route index element={<HomePage />} />
-          <Route path="/plant-detection" element={<PlantDetection />} />
+          <Route
+            path="/plant-detection"
+            element={
+              <ProtectedRoute>
+                <PlantDetection />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/profile/account-info" element={<AccountInfo />} />
+          <Route
+            path="/profile/account-info"
+            element={
+              <ProtectedRoute>
+                <AccountInfo />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile/edit-account-info"
-            element={<EditAccountInfo />}
+            element={
+              <ProtectedRoute>
+                <EditAccountInfo />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/pest-detection" element={<PestDetection />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/profile/payments" element={<Payments />} />
+          <Route
+            path="/pest-detection"
+            element={
+              <ProtectedRoute>
+                <PestDetection />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <ProtectedRoute>
+                <Support />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/payments"
+            element={
+              <ProtectedRoute>
+                <Payments />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile/analysis-history"
-            element={<AnalysisHistory />}
+            element={
+              <ProtectedRoute>
+                <AnalysisHistory />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/profile/analysis-history/analysis-detail/:id"
-            element={<AnalysisDetail />}
+            element={
+              <ProtectedRoute>
+                <AnalysisDetail />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/fertilizer-detection"
-            element={<FertilizerDetection />}
+            element={
+              <ProtectedRoute>
+                <FertilizerDetection />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/water-detection" element={<WaterDetection />} />
-          <Route path="/smart-consultant" element={<SmartConsultant />} />
-          <Route path="/buy-subscription" element={<BuySubscription />} />
+          <Route
+            path="/water-detection"
+            element={
+              <ProtectedRoute>
+                <WaterDetection />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/smart-consultant"
+            element={
+              <ProtectedRoute>
+                <SmartConsultant />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/buy-subscription"
+            element={
+              <ProtectedRoute>
+                <BuySubscription />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile/subscription-renewal"
-            element={<SubscriptionRenewal />}
+            element={
+              <ProtectedRoute>
+                <SubscriptionRenewal />
+              </ProtectedRoute>
+            }
           />
           <Route path="*" element={<NotFound />} />
         </Route>

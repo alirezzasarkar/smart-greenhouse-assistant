@@ -12,6 +12,7 @@ const Question = ({
 
   const handleChange = (e) => {
     const selectedValue = e.target.value;
+    // console.log(e.target);
     const checked = e.target.checked;
 
     if (isMulti) {
@@ -37,15 +38,15 @@ const Question = ({
       </p>
       {options.map((option, index) => {
         const checked = isMulti
-          ? (value || []).includes(option.value)
-          : value === option.value;
+          ? (value || []).includes(option.label)
+          : value === option.label;
 
         return (
           <label key={index} className="flex items-center mb-2 cursor-pointer">
             <input
               type={isMulti ? "checkbox" : "radio"}
               name={name}
-              value={option.value}
+              value={option.label}
               checked={checked}
               onChange={handleChange}
               className={

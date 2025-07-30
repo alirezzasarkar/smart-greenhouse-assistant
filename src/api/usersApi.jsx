@@ -10,5 +10,10 @@ export const refreshTokenRequest = (refresh) =>
   axios.post("/users/auth/token/refresh/", { refresh });
 
 export const getProfile = () => axios.get("/users/profile/");
-export const updateProfile = (data) => axios.put("/users/profile/", data);
+export const updateProfile = (data) =>
+  axios.put("/users/profile/", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 export const patchProfile = (data) => axios.patch("/users/profile/", data);
