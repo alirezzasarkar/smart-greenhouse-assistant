@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UploadButton from "../components/common/UploadButton";
 import InputField from "../components/common/InputField";
 import RadioGroup from "../components/common/RadioGroup";
+import AuthContext from "../context/AuthContext";
+import { updateProfile } from "../api/usersApi";
+import toast from "react-hot-toast";
 
 /**
  * EditAccountInfo component renders the account information form
@@ -11,23 +14,80 @@ import RadioGroup from "../components/common/RadioGroup";
  * The form is submitted when the user clicks the "تکمیل اطلاعات" button.
  */
 const EditAccountInfo = () => {
+  const { user, updateUserDetails, refreshToken } = useContext(AuthContext);
+  const [uploadStatus, setUploadStatus] = useState(null); // null, 'success', or 'error'
   const [formData, setFormData] = useState({
-    firstName: "علیرضا",
-    lastName: "سرکار",
-    phone: "09123456789",
-    email: "example@email.com",
-    usageType: "گیاهان خانگی",
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    email: "",
+    usage_type: "",
+    image: "",
   });
+
+  useEffect(() => {
+    const { first_name, last_name, phone_number, usage_type, email, image } =
+      user;
+    setFormData({
+      first_name,
+      last_name,
+      phone_number,
+      email,
+      usage_type: usage_type?.replace(/^["']|["']$/g, "") || "",
+      image,
+    });
+  }, [user]);
+
+  const onUpload = async (image) => {
+    setFormData((prev) => ({
+      ...prev,
+      image,
+    }));
+    setUploadStatus("success");
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle submit logic here
-    console.log("Updated info:", formData);
+
+    const isChanged = Object.keys(formData).some(
+      (key) => formData[key] !== user[key]
+    );
+
+    if (!isChanged) {
+      toast.error("تغییری در اطلاعات ایجاد نشده است");
+      return;
+    }
+
+    const finalFormData = new FormData();
+    finalFormData.append("first_name", formData.first_name);
+    finalFormData.append("last_name", formData.last_name);
+    finalFormData.append("phone_number", formData.phone_number);
+    finalFormData.append("email", formData.email);
+    finalFormData.append("usage_type", formData.usage_type);
+    if (formData.image instanceof File) {
+      finalFormData.append("image", formData.image);
+    }
+
+    toast.promise(updateProfile(finalFormData), {
+      loading: "درحال بروزرسانی اطلاعات . . .",
+      success: (response) => {
+        updateUserDetails(response.data);
+        return "پروفایل با موفقیت بروزرسانی شد";
+      },
+      error: (err) => {
+        if (err.code === "token_not_valid") {
+          refreshToken();
+          toast.error("لطفا 10 ثانیه بعد مجدد تلاش کنید");
+        }
+        console.error("Error updating profile:", err);
+        toast.error("خطایی پیش آمده");
+      },
+    });
   };
 
   return (
@@ -38,23 +98,23 @@ const EditAccountInfo = () => {
         </label>
         <InputField
           type="text"
-          name="firstName"
+          name="first_name"
           placeholder="نام"
-          value={formData.firstName}
+          value={formData.first_name}
           onChange={handleChange}
         />
         <InputField
           type="text"
-          name="lastName"
+          name="last_name"
           placeholder="نام خانوادگی"
-          value={formData.lastName}
+          value={formData.last_name}
           onChange={handleChange}
         />
         <InputField
           type="text"
-          name="phone"
+          name="phone_number"
           placeholder="شماره تماس"
-          value={formData.phone}
+          value={formData.phone_number}
           onChange={handleChange}
         />
         <InputField
@@ -66,17 +126,20 @@ const EditAccountInfo = () => {
         />
         <RadioGroup
           label="پلتفرم را بیشتر در چه زمینه‌ای استفاده می‌کنید؟"
-          name="usageType"
+          name="usage_type"
           options={[
-            { label: "باغداری", value: "" },
-            { label: "گلخانه‌داری", value: "" },
-            { label: "نگهداری از گیاهان خانگی", value: "" },
+            { label: "باغداری", value: "باغداری" },
+            { label: "گلخانه‌داری", value: "گلخانه‌داری" },
+            {
+              label: "نگهداری از گیاهان خانگی",
+              value: "نگهداری از گیاهان خانگی",
+            },
           ]}
-          selectedValue={formData.usageType}
+          selectedValue={formData.usage_type}
           onChange={handleChange}
         />
         <div className="flex flex-col md:flex-row gap-4 mt-6">
-          <UploadButton />
+          <UploadButton onUpload={onUpload} uploadStatus={uploadStatus} />
           <button
             type="submit"
             className="w-full md:w-auto flex-1 bg-color cursor-pointer text-white py-3 rounded-4xl text-sm hover:bg-green-600 transition-colors"

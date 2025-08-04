@@ -4,96 +4,68 @@ import Question from "../components/common/Question";
 import Dropdown from "../components/common/Dropdown";
 import Loader from "../components/common/Loader";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import {
+  createFertilizerDetection,
+  getFertilizerDetections,
+} from "../api/fertilizerApi";
 
 const questions = [
   {
-    question: "گیاه در چه مرحله ای از رشد قرار دارد؟",
-    name: "growthStage",
+    question: "هدف شما از کوددهی به این گیاه چیست؟",
+    name: "goal",
     options: [
-      { label: "مرحله‌برداشت (رسیده)", value: "harvest" },
-      { label: "در حال رشد (برگ‌دهی و ساقه)", value: "growing" },
-      { label: "نهال ابتدایی (تازه کاشته‌شده)", value: "seedling" },
-      { label: "قلمه‌زنی (تکثیر یافته)", value: "propagated" },
-      { label: "اصلاً رشد نکرده (ایستا)", value: "no_growth" },
+      { label: "رشد سریع‌تر و پرپشت شدن", value: "faster_growth_and_density" },
+      { label: "گل‌دهی بیشتر", value: "more_flowering" },
+      { label: "افزایش میوه‌دهی", value: "more_fruiting" },
+      {
+        label: "سبز ماندن و جلوگیری از زردی",
+        value: "stay_green_prevent_yellowing",
+      },
+      { label: "درمان بیماری یا ضعف گیاه", value: "treat_disease_or_weakness" },
     ],
   },
   {
-    question: "محیط نگهداری گیاه کجاست؟",
-    name: "plantLocation",
+    question: "گیاه در کجا نگهداری می‌شود؟",
+    name: "location",
     options: [
-      { label: "آپارتمان", value: "apartment" },
-      { label: "بالکن و تراس", value: "balcony_terrace" },
-      { label: "باغ", value: "garden" },
+      { label: "فضای باز (باغچه، مزرعه)", value: "outdoor_garden_farm" },
       { label: "گلخانه", value: "greenhouse" },
+      { label: "فضای داخلی (آپارتمان، دفتر کار)", value: "indoor_home_office" },
     ],
   },
   {
-    question: "وضعیت نور محیط نگهداری گل چگونه بود؟",
-    name: "lightType",
+    question: "در حال حاضر گیاه در چه مرحله‌ای است؟",
+    name: "growth_stage",
     options: [
-      { label: "نور مستقیم خورشید", value: "direct_sunlight" },
-      { label: "نور مصنوعی", value: "artificial_light" },
-      { label: "نور غیرمستقیم", value: "indirect_light" },
-      { label: "کم نور یا بدون نور", value: "low_light" },
+      { label: "نهال یا تازه کاشته شده", value: "seedling" },
+      { label: "در حال رشد برگ و ساقه", value: "leafy_growth" },
+      { label: "در مرحله گلدهی", value: "flowering" },
+      { label: "در حال میوه‌دهی", value: "fruiting" },
+      { label: "در حالت رکود یا خواب", value: "dormant" },
     ],
   },
   {
-    question: "دمای محیطی که گیاه نگهداری می‌شود معمولاً چقدر است؟",
-    name: "temperature",
+    question: "آیا از قبل کود خاصی استفاده کرده‌اید؟",
+    name: "prior_fertilizer",
     options: [
-      { label: "زیر ۱۵ درجه", value: "below_15" },
-      { label: "بین ۱۵ تا ۲۵ درجه", value: "15_to_25" },
-      { label: "بالای ۲۵ درجه", value: "above_25" },
-      { label: "متغیر بوده و مشخص نیست", value: "unknown" },
+      { label: "بله، کود شیمیایی", value: "used_chemical" },
+      { label: "بله، کود آلی یا ورمی‌کمپوست", value: "used_organic" },
+      { label: "خیر، این اولین بار است", value: "first_time" },
     ],
   },
   {
-    question: "خاک گیاه شما چه ویژگی دارد؟",
-    name: "soilType",
+    question: "چه نوع کودی ترجیح می‌دهید؟",
+    name: "preferred_type",
     options: [
-      { label: "خاک شنی", value: "sandy" },
-      { label: "خاک رسی", value: "clay" },
-      { label: "خاک آهکی", value: "alkaline" },
-      { label: "نمیدانم", value: "unknown" },
-    ],
-  },
-  {
-    question: "شرایط آب و هوایی محیط نگهداری گیاه چگونه است؟",
-    name: "climate",
-    options: [
-      { label: "گرم و خشک", value: "hot_dry" },
-      { label: "گرم و مرطوب", value: "hot_humid" },
-      { label: "معتدل و مرطوب", value: "mild_humid" },
-      { label: "سرد و خشک", value: "cold_dry" },
-      { label: "سرد و مرطوب", value: "cold_humid" },
-      { label: "معتدل و خشک", value: "mild_dry" },
-    ],
-  },
-  {
-    question: "آخرین بار چه زمانی به گیاه کود داده‌اید؟",
-    name: "lastFertilization",
-    options: [
-      { label: "کمتر از ۱ ماه گذشته", value: "under_1_month" },
-      { label: "بین ۱ تا ۳ ماه گذشته", value: "between_1_and_3_months" },
-      { label: "بیشتر از ۳ ماه گذشته", value: "over_3_months" },
-      { label: "تا حالا کود نداده‌ام", value: "never" },
-    ],
-  },
-  {
-    question: "آیا گیاه دچار آفت یا بیماری بوده است؟",
-    name: "diseaseHistory",
-    options: [
-      { label: "بله، اخیراً مشاهده شده", value: "yes" },
-      { label: "خیر، گیاه سالم است", value: "no" },
+      { label: "کود طبیعی یا ارگانیک", value: "organic" },
+      { label: "کود شیمیایی با تأثیر سریع", value: "chemical_fast" },
+      { label: "فرقی نمی‌کند، فقط نتیجه مهم است", value: "no_preference" },
     ],
   },
 ];
 
 const plantOptions = ["آلوئه‌ورا", "زامیفولیا", "آگلونما", "گل محمدی"];
-
-const handleQuestionChange = (e) => {
-  console.log(e.target.name, e.target.value);
-};
 
 /**
  * FertilizerDetection component provides an interface for users to select
@@ -110,25 +82,71 @@ const FertilizerDetection = () => {
   const [result, setResult] = useState("");
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    goal: "",
+    location: "",
+    growth_stage: "",
+    prior_fertilizer: "",
+    preferred_type: "",
+  });
 
   const handleDropdownChange = (selectedOption) => {
     setSelectedPlant(selectedOption);
     setError("");
   };
 
+  const handleQuestionChange = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleResultClick = () => {
     if (!selectedPlant) {
       setError("لطفاً ابتدا یک گیاه انتخاب کنید.");
+      toast.error("لطفاً ابتدا یک گیاه انتخاب کنید.");
       return;
     }
+    const emptyFields = Object.entries(formData).filter(
+      ([key, value]) => !value || value.trim() === ""
+    );
+
+    if (emptyFields.length > 0) {
+      toast.error(
+        "لطفاً تمام گزینه‌ها را تکمیل کنید. پر کردن همه‌ی فیلدها الزامی است."
+      );
+      return;
+    }
+
     setLoading(true);
     setResult("");
-    setTimeout(() => {
-      setLoading(false);
-      setResult(
-        "شناسایی گیاه با موفقیت انجام شد. گیاه شما از خانواده گیاهان آپارتمانی است و نیاز به نور متوسط و آبیاری منظم دارد. این گیاه در شرایط دمایی بین ۱۸ تا ۲۵ درجه سانتی‌گراد بهترین رشد را دارد. همچنین، توصیه می‌شود هر دو هفته یک‌بار از کود مخصوص گیاهان آپارتمانی استفاده کنید. در صورت مشاهده زردی برگ‌ها، ممکن است گیاه شما دچار کمبود مواد مغذی باشد. لطفاً تصویر گیاه خود را بررسی کنید و در صورت نیاز به اطلاعات بیشتر، با کارشناسان ما تماس بگیرید."
-      );
-    }, 5000);
+
+    toast.promise(
+      createFertilizerDetection({
+        plant_name: selectedPlant,
+        answers: formData,
+      }),
+      {
+        loading: "درحال تحلیل اطلاعات . . .",
+        success: (res) => {
+          setResult(res.data.result);
+          setLoading(false);
+        },
+        error: (err) => {
+          console.log(err);
+          setLoading(false);
+          setError("خطایی در سرور پیش آمده");
+          return "خطایی در سرور رخ داده";
+        },
+      }
+    );
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   setResult(
+    //     "شناسایی گیاه با موفقیت انجام شد. گیاه شما از خانواده گیاهان آپارتمانی است و نیاز به نور متوسط و آبیاری منظم دارد. این گیاه در شرایط دمایی بین ۱۸ تا ۲۵ درجه سانتی‌گراد بهترین رشد را دارد. همچنین، توصیه می‌شود هر دو هفته یک‌بار از کود مخصوص گیاهان آپارتمانی استفاده کنید. در صورت مشاهده زردی برگ‌ها، ممکن است گیاه شما دچار کمبود مواد مغذی باشد. لطفاً تصویر گیاه خود را بررسی کنید و در صورت نیاز به اطلاعات بیشتر، با کارشناسان ما تماس بگیرید."
+    //   );
+    // }, 5000);
   };
 
   return (
@@ -169,7 +187,7 @@ const FertilizerDetection = () => {
       </div>
 
       {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
-      <Description text="برای دقت بیشتر در پاسخ دریافتی، لطفاً به سوالات زیر پاسخ دهید. (پاسخ‌گویی اختیاری است)" />
+      <Description text="برای دقت بیشتر در پاسخ دریافتی، لطفاً به سوالات زیر پاسخ دهید." />
 
       <div className="mt-6">
         {questions.map((q, index) => (
@@ -178,6 +196,7 @@ const FertilizerDetection = () => {
             question={q.question}
             options={q.options}
             name={q.name}
+            value={formData[q.name]}
             onChange={handleQuestionChange}
           />
         ))}
@@ -185,10 +204,26 @@ const FertilizerDetection = () => {
       <Description text="با توجه به مرحله رشد گیاه و محیط نگهداری انتخاب‌شده، سیستم هوش مصنوعی ما با بررسی ویژگی‌های تغذیه‌ای این گیاه، بهترین نوع کود را برای رشد سالم و بهینه پیشنهاد می‌دهد. این توصیه بر اساس منابع علمی، تجربیات کشاورزی و تحلیل دقیق داده‌های گیاهی طراحی شده است. به نتیجه اعتماد کنید گیاه شما در مسیر رشد بهتر قرار دارد." />
       {loading ? <Loader /> : <ResultButton onClick={handleResultClick} />}
       {result && (
-        <div className="mt-20 text-center">
-          <h3 className="mb-5 text-color">نتایج تشخیص کود مناسب گیاه شما</h3>
+        <div className="mt-20 text-right space-y-4 max-w-2xl mx-auto">
+          <h3 className="mb-5 text-lg font-bold text-green-700">
+            نتایج تشخیص کود مناسب گیاه شما
+          </h3>
 
-          <p className="text-gray-700 mt-10 text-justify">{result}</p>
+          {result.split("\n\n").map((section, index) => {
+            const [title, ...rest] = section.split(":");
+            const content = rest.join(":").trim();
+            return (
+              <div
+                key={index}
+                className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-200"
+              >
+                <strong className="text-green-800">{title.trim()}:</strong>
+                <p className="text-gray-700 mt-2 leading-relaxed whitespace-pre-line">
+                  {content}
+                </p>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
-const UploadButton = ({ onUpload }) => {
-  const [uploadStatus, setUploadStatus] = useState(null); // null, 'success', or 'error'
-
+const UploadButton = ({ onUpload, uploadStatus }) => {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -12,16 +11,16 @@ const UploadButton = ({ onUpload }) => {
         file.type === "image/heic" ||
         file.type === "image/heif"
       ) {
-        setUploadStatus("success");
         if (onUpload) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            onUpload(reader.result); // Pass the uploaded image data to the parent component
-          };
-          reader.readAsDataURL(file);
+          // const reader = new FileReader();
+          // reader.onload = () => {
+          //   onUpload(reader.result);
+          // };
+          // reader.readAsDataURL(file);
+          onUpload(file);
         }
       } else {
-        setUploadStatus("error");
+        toast.error("نوع فایل فقط عکس میباشد");
       }
     }
   };

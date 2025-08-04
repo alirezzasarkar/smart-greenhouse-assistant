@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import SubscriptionPlanCard from "../components/common/SubscriptionPlanCard";
+import { getPlans } from "../api/subscriptionsApi";
 
 const plans = [
   {
@@ -49,6 +51,19 @@ const plans = [
  * @returns {JSX.Element} The JSX element representing the BuySubscription component.
  */
 const BuySubscription = () => {
+  const [plans, setPlans] = useState([]);
+  const api = async () => {
+    try {
+      const { data } = await getPlans();
+      setPlans(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    api();
+  }, []);
   return (
     <div className="p-4">
       <p className="text-justify  text-gray-500 text-medium mb-10 leading-relaxed">
@@ -59,7 +74,7 @@ const BuySubscription = () => {
 
       <div className="flex flex-col gap-6">
         {plans.map((plan) => (
-          <SubscriptionPlanCard key={plan.title} plan={plan} />
+          <SubscriptionPlanCard key={plan.name} plan={plan} />
         ))}
       </div>
     </div>

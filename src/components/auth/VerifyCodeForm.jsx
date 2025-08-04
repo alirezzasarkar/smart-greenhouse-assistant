@@ -1,13 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import VerifyCodeInput from "./VerifyCodeInput";
 import Button from "../common/Button";
+import AuthContext from "../../context/AuthContext";
 
 const VerifyCodeForm = () => {
   const [code, setCode] = useState("");
   const [resendTimer, setResendTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const { verifyCode, handleSendCode, isAuthenticated } =
+    useContext(AuthContext);
+
+  const phone = location.state?.phone || "";
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     if (resendTimer > 0) {
@@ -18,11 +33,19 @@ const VerifyCodeForm = () => {
     }
   }, [resendTimer]);
 
-  const handleResendCode = () => {
+  const handleResendCode = async () => {
     if (canResend) {
-      console.log("Resending verification code...");
-      setResendTimer(60);
-      setCanResend(false);
+      setError(null);
+      setLoading(true);
+      try {
+        await handleSendCode(phone);
+        setResendTimer(60);
+        setCanResend(false);
+      } catch (err) {
+        setError("خطا در ارسال مجدد کد");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -30,10 +53,22 @@ const VerifyCodeForm = () => {
     setCode(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Verification Code:", code);
-    navigate("/");
+    setError(null);
+    if (!phone) {
+      setError("شماره تلفن یافت نشد، لطفاً دوباره وارد شوید");
+      return;
+    }
+    setLoading(true);
+    try {
+      await verifyCode(phone, code);
+      navigate("/");
+    } catch (err) {
+      setError("کد تأیید اشتباه است یا منقضی شده");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,18 +85,25 @@ const VerifyCodeForm = () => {
         کد فعال‌سازی به شماره همراه شما ارسال شده است. لطفاً کد را وارد نمایید
         تا روند ورود تکمیل شود.
       </p>
+
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
         <VerifyCodeInput value={code} onChange={handleChange} />
         <Button
           type="submit"
+          disabled={loading || code.trim().length === 0}
           className="bg-color text-white hover:bg-green-800 w-full mt-5"
         >
-          تأیید
+          {loading ? "در حال بررسی..." : "تأیید"}
         </Button>
       </form>
+
+      {error && (
+        <p className="text-red-600 text-center mt-4 text-sm">{error}</p>
+      )}
+
       <button
         onClick={handleResendCode}
-        disabled={!canResend}
+        disabled={!canResend || loading}
         className={`mt-8 text-sm ${
           canResend
             ? "text-color btn bg-gray-100 w-full rounded-4xl p-3"

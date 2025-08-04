@@ -1,33 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 
 const AccountInfoCard = () => {
+  const { user } = useContext(AuthContext);
+  const { first_name, last_name, email, phone_number, image } = user;
   return (
     <>
       <div className="flex flex-col bg-menu p-4 rounded-2xl  mb-6">
         <img
-          src="/public/assets/icons/user.svg"
+          src={image ? image : "/public/assets/icons/user.svg"}
           alt="User Avatar"
           className="w-16 h-16 rounded-full mx-auto mb-10"
         />
         <div className="text-right">
           <p className="text-sm text-gray-500 mb-6">
             نام :{" "}
-            <span className="font-bold text-black block mt-2">علیرضا</span>
-          </p>
-          <p className="text-sm text-gray-500 mb-6">
-            نام خانوادگی:{" "}
-            <span className="font-bold text-black block mt-2">سرکار</span>
-          </p>
-          <p className="text-sm text-gray-500 mb-6">
-            ایمیل:{" "}
             <span className="font-bold text-black block mt-2">
-              example@email.com
+              {first_name}
             </span>
           </p>
           <p className="text-sm text-gray-500 mb-6">
+            نام خانوادگی:{" "}
+            <span className="font-bold text-black block mt-2">{last_name}</span>
+          </p>
+          <p className="text-sm text-gray-500 mb-6">
+            ایمیل:{" "}
+            <span className="font-bold text-black block mt-2">{email}</span>
+          </p>
+          <p className="text-sm text-gray-500 mb-6">
             شماره تماس:{" "}
-            <span className="font-bold text-black block mt-2">09123456789</span>
+            <span className="font-bold text-black block mt-2">
+              {phone_number}
+            </span>
           </p>
         </div>
       </div>

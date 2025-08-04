@@ -4,96 +4,60 @@ import Description from "../components/common/Description";
 import Question from "../components/common/Question";
 import Dropdown from "../components/common/Dropdown";
 import Loader from "../components/common/Loader";
+import toast from "react-hot-toast";
+import { createWaterlightDetection } from "../api/waterlightApi";
 
 const questions = [
   {
-    question: "گیاه در چه مرحله ای از رشد قرار دارد؟",
-    name: "growthStage",
+    question: "گیاه در حال حاضر کجا نگهداری می‌شود؟",
+    name: "location",
     options: [
-      { label: "مرحله‌برداشت (رسیده)", value: "harvest" },
-      { label: "در حال رشد (برگ‌دهی و ساقه)", value: "growing" },
-      { label: "نهال ابتدایی (تازه کاشته‌شده)", value: "seedling" },
-      { label: "قلمه‌زنی (تکثیر یافته)", value: "propagated" },
-      { label: "اصلاً رشد نکرده (ایستا)", value: "no_growth" },
-    ],
-  },
-  {
-    question: "محیط نگهداری گیاه کجاست؟",
-    name: "plantLocation",
-    options: [
-      { label: "آپارتمان", value: "apartment" },
-      { label: "بالکن و تراس", value: "balcony_terrace" },
-      { label: "باغ", value: "garden" },
+      { label: "داخل خانه", value: "indoor" },
+      { label: "فضای باز", value: "outdoor" },
       { label: "گلخانه", value: "greenhouse" },
     ],
   },
   {
-    question: "وضعیت نور محیط نگهداری گل چگونه بود؟",
-    name: "lightType",
-    options: [
-      { label: "نور مستقیم خورشید", value: "direct_sunlight" },
-      { label: "نور مصنوعی", value: "artificial_light" },
-      { label: "نور غیرمستقیم", value: "indirect_light" },
-      { label: "کم نور یا بدون نور", value: "low_light" },
-    ],
-  },
-  {
-    question: "دمای محیطی که گیاه نگهداری می‌شود معمولاً چقدر است؟",
-    name: "temperature",
-    options: [
-      { label: "زیر ۱۵ درجه", value: "below_15" },
-      { label: "بین ۱۵ تا ۲۵ درجه", value: "15_to_25" },
-      { label: "بالای ۲۵ درجه", value: "above_25" },
-      { label: "متغیر بوده و مشخص نیست", value: "unknown" },
-    ],
-  },
-  {
-    question: "خاک گیاه شما چه ویژگی دارد؟",
-    name: "soilType",
-    options: [
-      { label: "خاک شنی", value: "sandy" },
-      { label: "خاک رسی", value: "clay" },
-      { label: "خاک آهکی", value: "alkaline" },
-      { label: "نمیدانم", value: "unknown" },
-    ],
-  },
-  {
-    question: "شرایط آب و هوایی محیط نگهداری گیاه چگونه است؟",
-    name: "climate",
+    question: "چه نوع آب و هوایی در محل نگهداری غالب است؟",
+    name: "weather",
     options: [
       { label: "گرم و خشک", value: "hot_dry" },
       { label: "گرم و مرطوب", value: "hot_humid" },
-      { label: "معتدل و مرطوب", value: "mild_humid" },
       { label: "سرد و خشک", value: "cold_dry" },
-      { label: "سرد و مرطوب", value: "cold_humid" },
-      { label: "معتدل و خشک", value: "mild_dry" },
+      { label: "معتدل", value: "mild" },
     ],
   },
   {
-    question: "آخرین بار چه زمانی به گیاه کود داده‌اید؟",
-    name: "lastFertilization",
+    question: "مرحله فعلی رشد گیاه چیست؟",
+    name: "growth_stage",
     options: [
-      { label: "کمتر از ۱ ماه گذشته", value: "under_1_month" },
-      { label: "بین ۱ تا ۳ ماه گذشته", value: "between_1_and_3_months" },
-      { label: "بیشتر از ۳ ماه گذشته", value: "over_3_months" },
-      { label: "تا حالا کود نداده‌ام", value: "never" },
+      { label: "نهال یا تازه کاشته شده", value: "seedling" },
+      { label: "در حال رشد", value: "growing" },
+      { label: "بالغ و ثابت", value: "mature" },
+      { label: "گلدهی یا میوه‌دهی", value: "flowering_or_fruiting" },
     ],
   },
   {
-    question: "آیا گیاه دچار آفت یا بیماری بوده است؟",
-    name: "diseaseHistory",
+    question: "چند وقت یک‌بار معمولاً آبیاری انجام می‌دهید؟",
+    name: "irrigation",
     options: [
-      { label: "بله، اخیراً مشاهده شده", value: "yes" },
-      { label: "خیر، گیاه سالم است", value: "no" },
+      { label: "هر روز", value: "daily" },
+      { label: "هر ۲-۳ روز", value: "every_2_3_days" },
+      { label: "هفته‌ای یک‌بار یا کمتر", value: "weekly_or_less" },
+      { label: "هنوز نمی‌دانم", value: "not_sure" },
+    ],
+  },
+  {
+    question: "آیا علائمی مثل زرد شدن برگ، پژمردگی یا پوسیدگی دیده‌اید؟",
+    name: "symptoms",
+    options: [
+      { label: "بله", value: "yes" },
+      { label: "خیر", value: "no" },
     ],
   },
 ];
 
 const plantOptions = ["آلوئه‌ورا", "زامیفولیا", "آگلونما", "گل محمدی"];
-
-const handleQuestionChange = (e) => {
-  console.log(e.target.name, e.target.value);
-};
 
 /**
  * WaterDetection component provides an interface for users to select a plant
@@ -109,21 +73,61 @@ const WaterDetection = () => {
   const [result, setResult] = useState("");
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    location: "",
+    weather: "",
+    growth_stage: "",
+    irrigation: "",
+    symptoms: "",
+  });
+
+  const handleQuestionChange = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleResultClick = () => {
     if (!selectedPlant) {
       setError("لطفاً یک گیاه انتخاب کنید.");
+      toast.error("لطفاً یک گیاه انتخاب کنید.");
+      return;
+    }
+
+    const emptyFields = Object.entries(formData).filter(
+      ([key, value]) => !value || value.trim() === ""
+    );
+
+    if (emptyFields.length > 0) {
+      toast.error(
+        "لطفاً تمام گزینه‌ها را تکمیل کنید. پر کردن همه‌ی فیلدها الزامی است."
+      );
       return;
     }
 
     setError("");
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setResult(
-        "شناسایی گیاه با موفقیت انجام شد. گیاه شما از خانواده گیاهان آپارتمانی است و نیاز به نور متوسط و آبیاری منظم دارد. این گیاه در شرایط دمایی بین ۱۸ تا ۲۵ درجه سانتی‌گراد بهترین رشد را دارد. همچنین، توصیه می‌شود هر دو هفته یک‌بار از کود مخصوص گیاهان آپارتمانی استفاده کنید. در صورت مشاهده زردی برگ‌ها، ممکن است گیاه شما دچار کمبود مواد مغذی باشد. لطفاً تصویر گیاه خود را بررسی کنید و در صورت نیاز به اطلاعات بیشتر، با کارشناسان ما تماس بگیرید."
-      );
-    }, 5000);
+
+    toast.promise(
+      createWaterlightDetection({
+        plant_name: selectedPlant,
+        answers: formData,
+      }),
+      {
+        loading: "درحال تحلیل اطلاعات . . .",
+        success: (res) => {
+          setResult(res.data.result);
+          setLoading(false);
+        },
+        error: (err) => {
+          console.log(err);
+          setLoading(false);
+          setError("خطایی در سرور پیش آمده");
+          return "خطایی در سرور رخ داده";
+        },
+      }
+    );
   };
 
   return (
@@ -163,7 +167,7 @@ const WaterDetection = () => {
         />
       </div>
       {error && <p className="text-red-500 text-center">{error}</p>}
-      <Description text="برای دقت بیشتر در پاسخ دریافتی، لطفاً به سوالات زیر پاسخ دهید. (پاسخ‌گویی اختیاری است)" />
+      <Description text="برای دقت بیشتر در پاسخ دریافتی، لطفاً به سوالات زیر پاسخ دهید." />
 
       <div className="mt-6">
         {questions.map((q, index) => (
@@ -172,6 +176,7 @@ const WaterDetection = () => {
             question={q.question}
             options={q.options}
             name={q.name}
+            value={formData[q.name]}
             onChange={handleQuestionChange}
           />
         ))}
@@ -179,12 +184,26 @@ const WaterDetection = () => {
 
       {loading ? <Loader /> : <ResultButton onClick={handleResultClick} />}
       {result && (
-        <div className="mt-20 text-center">
-          <h3 className="mb-5 text-color">
+        <div className="mt-20 text-right space-y-4 max-w-2xl mx-auto">
+          <h3 className="mb-5 text-lg font-bold text-green-700">
             نتایج تشخیص آب و دمای مناسب گیاه شما
           </h3>
 
-          <p className="text-gray-700 mt-10 text-justify">{result}</p>
+          {result.split("\n\n").map((section, index) => {
+            const [title, ...rest] = section.split(":");
+            const content = rest.join(":").trim();
+            return (
+              <div
+                key={index}
+                className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-200"
+              >
+                <strong className="text-green-800">{title.trim()}:</strong>
+                <p className="text-gray-700 mt-2 leading-relaxed whitespace-pre-line">
+                  {content}
+                </p>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

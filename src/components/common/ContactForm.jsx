@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { createSupportRequest } from "../../api/supportApi";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
+    customer_name: "",
+    phone_number: "",
     description: "",
   });
 
@@ -14,18 +16,22 @@ const ContactForm = () => {
     const persianToEnglishDigits = (str) =>
       str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
 
-    const phone = persianToEnglishDigits(formData.phone);
+    const phone_number = persianToEnglishDigits(formData.phone_number);
 
-    if (!formData.name.trim()) {
-      newErrors.name = "نام و نام خانوادگی الزامی است.";
+    if (!formData.customer_name.trim()) {
+      newErrors.customer_name = "نام و نام خانوادگی الزامی است.";
+      toast.error("نام و نام خانوادگی الزامی است.");
     }
-    if (!phone.trim()) {
-      newErrors.phone = "شماره تماس الزامی است.";
-    } else if (!/^\d{10,11}$/.test(phone)) {
-      newErrors.phone = "شماره تماس باید معتبر باشد.";
+    if (!phone_number.trim()) {
+      newErrors.phone_number = "شماره تماس الزامی است.";
+      toast.error("شماره تماس الزامی است.");
+    } else if (!/^\d{11}$/.test(phone_number)) {
+      newErrors.phone_number = "شماره تماس باید معتبر باشد.";
+      toast.error("شماره تماس باید معتبر باشد.");
     }
     if (!formData.description.trim()) {
       newErrors.description = "توضیحات الزامی است.";
+      toast.error("توضیحات الزامی است.");
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -39,10 +45,18 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form submitted:", formData);
-      // Clear form after successful submission
-      setFormData({ name: "", phone: "", description: "" });
-      setErrors({});
+      toast.promise(createSupportRequest(formData), {
+        loading: "در حال ارسال پیام . . .",
+        success: (res) => {
+          setFormData({ customer_name: "", phone_number: "", description: "" });
+          setErrors({});
+          return "پیام شما با موفقیت ارسال شد";
+        },
+        error: (err) => {
+          console.log(err);
+          return "مشکلی در ارسال پیام پیش آمده";
+        },
+      });
     }
   };
 
@@ -51,27 +65,27 @@ const ContactForm = () => {
       <div>
         <input
           type="text"
-          name="name"
+          name="customer_name"
           placeholder="نام و نام خانوادگی"
-          value={formData.name}
+          value={formData.customer_name}
           onChange={handleChange}
           className="w-full px-4 py-3 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         />
-        {errors.name && (
-          <p className="text-red-500 text-xs mt-2">{errors.name}</p>
+        {errors.customer_name && (
+          <p className="text-red-500 text-xs mt-2">{errors.customer_name}</p>
         )}
       </div>
       <div>
         <input
           type="text"
-          name="phone"
+          name="phone_number"
           placeholder="شماره تماس"
-          value={formData.phone}
+          value={formData.phone_number}
           onChange={handleChange}
           className="w-full px-4 py-3 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         />
-        {errors.phone && (
-          <p className="text-red-500 text-xs mt-2">{errors.phone}</p>
+        {errors.phone_number && (
+          <p className="text-red-500 text-xs mt-2">{errors.phone_number}</p>
         )}
       </div>
       <div>
