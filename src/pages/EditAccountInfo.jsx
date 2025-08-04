@@ -33,7 +33,7 @@ const EditAccountInfo = () => {
       last_name,
       phone_number,
       email,
-      usage_type,
+      usage_type: usage_type?.replace(/^["']|["']$/g, "") || "",
       image,
     });
   }, [user]);
@@ -68,7 +68,7 @@ const EditAccountInfo = () => {
     finalFormData.append("last_name", formData.last_name);
     finalFormData.append("phone_number", formData.phone_number);
     finalFormData.append("email", formData.email);
-    finalFormData.append("usage_type", JSON.stringify(formData.usage_type));
+    finalFormData.append("usage_type", formData.usage_type);
     if (formData.image instanceof File) {
       finalFormData.append("image", formData.image);
     }
