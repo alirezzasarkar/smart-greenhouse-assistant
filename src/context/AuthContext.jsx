@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [firstCustomerVisit, setFirstCustomerVisit] = useState(false);
+  const [firstCustomerVisit, setFirstCustomerVisit] = useState(true);
 
   const saveTokens = (access, refresh) => {
     localStorage.setItem(ACCESS_TOKEN_KEY, access);
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
       const access = getAccessToken();
       const refresh = getRefreshToken();
 
-      const isFirst = getLocalStorage("firstVisit");
+      const isFirst = getLocalStorage("isFirstVisit");
       setFirstCustomerVisit(!!isFirst);
 
       if (!access && !refresh) {
@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchProfile = useCallback(async () => {
     try {
-      const isFirstVisit = getLocalStorage("firstVisit");
+      const isFirstVisit = getLocalStorage("isFirstVisit");
       setFirstCustomerVisit(!!isFirstVisit);
       const res = await getProfile();
       setUser(res.data);
@@ -132,7 +132,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleSetFirstVisit = () => {
-    setLocalStorage("firstVisit", false);
+    setLocalStorage("isFirstVisit", false);
     setFirstCustomerVisit(false);
   };
 
@@ -166,7 +166,7 @@ export const AuthProvider = ({ children }) => {
       if (!access && !refresh) {
         setIsAuthenticated(false);
         setLoading(false);
-        const isFirst = getLocalStorage("firstVisit");
+        const isFirst = getLocalStorage("isFirstVisit");
         setFirstCustomerVisit(!!isFirst);
         return;
       }

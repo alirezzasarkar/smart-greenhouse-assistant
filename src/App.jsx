@@ -37,11 +37,13 @@ function App() {
     const isFirstVisit = getLocalStorage("isFirstVisit");
     const currentPath = window.location.pathname;
     const showModalPaths = ["/plant-detection", "/pest-detection"];
-
-    if (!isFirstVisit && showModalPaths.includes(currentPath)) {
-      setShowModal(true);
+    if (isFirstVisit == null) {
       setLocalStorage("isFirstVisit", true);
     }
+    // if (isFirstVisit == null && showModalPaths.includes(currentPath)) {
+    //   setShowModal(true);
+    //   setLocalStorage("isFirstVisit", true);
+    // }
   }, []);
 
   const handleAccept = () => {
@@ -70,9 +72,9 @@ function App() {
         <Route
           path="/onboarding"
           element={
-            <ProtectedRoute>
-              <OnboardingPage />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <OnboardingPage />
+            // </ProtectedRoute>
           }
         />
         <Route
