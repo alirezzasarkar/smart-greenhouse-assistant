@@ -5,22 +5,22 @@ const ProfileMenu = () => {
   const menuItems = [
     {
       label: "اطلاعات حساب کاربری",
-      icon: "/public/assets/icons/profile-icon/profile.svg",
+      icon: "/assets/icons/profile-icon/profile.svg",
       to: "/profile/account-info",
     },
     {
       label: "لیست پرداخت ها",
-      icon: "/public/assets/icons/profile-icon/payment.svg",
+      icon: "/assets/icons/profile-icon/payment.svg",
       to: "/profile/payments",
     },
     {
       label: "تمدید اشتراک",
-      icon: "/public/assets/icons/profile-icon/subscription.svg",
+      icon: "/assets/icons/profile-icon/subscription.svg",
       to: "/profile/subscription-renewal",
     },
     {
       label: "تاریخچه تحلیل ها",
-      icon: "/public/assets/icons/profile-icon/analysis.svg",
+      icon: "/assets/icons/profile-icon/analysis.svg",
       to: "/profile/analysis-history",
     },
   ];

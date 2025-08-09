@@ -19,34 +19,34 @@ const HomePage = () => {
     {
       title: "تشخیص هوشمند کود",
       description: "کود مناسب برای رشد بهتر گیاهتان را به‌سرعت شناسایی کنید.",
-      icon: "/public/assets/images/1.png",
+      icon: "/assets/images/1.png",
       linkTo: "/fertilizer-detection",
     },
     {
       title: "تشخیص هوشمند گیاه",
       description: "با گرفتن یک عکس، نام و مشخصات دقیق گیاه خود را ببینید.",
-      icon: "/public/assets/images/2.png",
+      icon: "/assets/images/2.png",
       linkTo: "/plant-detection",
     },
     {
       title: "تشخیص هوشمند آب و دما",
       description:
         "میزان آبیاری و دمای مناسب گیاه را دقیق و هوشمندانه دریافت کنید.",
-      icon: "/public/assets/images/3.png",
+      icon: "/assets/images/3.png",
       linkTo: "/water-detection",
     },
     {
       title: "تشخیص هوشمند آفات",
       description:
         "علائم بیماری یا آفت را بررسی و راه‌حل مناسب را دریافت کنید.",
-      icon: "/public/assets/images/4.png",
+      icon: "/assets/images/4.png",
       linkTo: "/pest-detection",
     },
     {
       title: "پشتیبانی ۲۴ ساعته",
       description:
         "در هر زمان، پاسخگوی سوالات و دغدغه‌های شما درباره گیاهانتان هستیم.",
-      icon: "/public/assets/images/5.png",
+      icon: "/assets/images/5.png",
       linkTo: "/support",
     },
   ];

@@ -17,7 +17,7 @@ const VerifyCodeInput = ({ value, onChange }) => {
   };
 
   return (
-    <div className="flex justify-between mb-4">
+    <div className="flex justify-between flex-row-reverse mb-4">
       {Array(5)
         .fill()
         .map((_, index) => (

@@ -219,7 +219,7 @@ const PestDetection = () => {
       <Description text="تصویر خود را واضح و با کیفیت مناسب مانند تصویر زیر ارسال کنید" />
       <div className="flex justify-center my-4">
         <img
-          src="/public/assets/images/pest-detection.png"
+          src="/assets/images/pest-detection.png"
           alt="نمونه تصویر آفات"
           className="rounded-lg shadow-md"
         />

@@ -21,32 +21,32 @@ const MainLayout = () => {
     {
       to: "/plant-detection",
       label: "شناسایی نوع و خانواده گیاه",
-      iconSrc: "/public/assets/icons/menu-icon/1.svg",
+      iconSrc: "/assets/icons/menu-icon/1.svg",
     },
     {
       to: "/pest-detection",
       label: "شناسایی آفات گیاه و روش‌های درمان",
-      iconSrc: "/public/assets/icons/menu-icon/2.svg",
+      iconSrc: "/assets/icons/menu-icon/2.svg",
     },
     {
       to: "/fertilizer-detection",
       label: "شناسایی کود مناسب و زمان کوددهی",
-      iconSrc: "/public/assets/icons/menu-icon/4.svg",
+      iconSrc: "/assets/icons/menu-icon/4.svg",
     },
     {
       to: "/water-detection",
       label: "تعیین میزان آب و دمای مناسب گیاه",
-      iconSrc: "/public/assets/icons/menu-icon/5.svg",
+      iconSrc: "/assets/icons/menu-icon/5.svg",
     },
     {
       to: "/support",
       label: "پشتیبانی ۲۴ ساعته",
-      iconSrc: "/public/assets/icons/menu-icon/6.svg",
+      iconSrc: "/assets/icons/menu-icon/6.svg",
     },
     {
       to: "/buy-subscription",
       label: "خرید اشتراک",
-      iconSrc: "/public/assets/icons/profile-icon/subscription.svg",
+      iconSrc: "/assets/icons/profile-icon/subscription.svg",
     },
   ];
 
@@ -54,20 +54,20 @@ const MainLayout = () => {
     {
       to: "/profile",
       label: "پروفایل کاربری",
-      iconSrc: "/public/assets/icons/profile-1.svg",
-      activeIconSrc: "/public/assets/icons/profile.svg",
+      iconSrc: "/assets/icons/profile-1.svg",
+      activeIconSrc: "/assets/icons/profile.svg",
     },
     {
       to: "/",
       label: "صفحه اصلی",
-      iconSrc: "/public/assets/icons/home-1.svg",
-      activeIconSrc: "/public/assets/icons/home.svg",
+      iconSrc: "/assets/icons/home-1.svg",
+      activeIconSrc: "/assets/icons/home.svg",
     },
     {
       to: "/smart-consultant",
       label: "مشاوره هوشمند",
-      iconSrc: "/public/assets/icons/consultant-1.svg",
-      activeIconSrc: "/public/assets/icons/consultant.svg",
+      iconSrc: "/assets/icons/consultant-1.svg",
+      activeIconSrc: "/assets/icons/consultant.svg",
     },
   ];
 
@@ -80,7 +80,7 @@ const MainLayout = () => {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <img
-            src="/public/assets/icons/menu.svg"
+            src="/assets/icons/menu.svg"
             alt="Menu Icon"
             className="w-8 h-8"
           />
@@ -126,7 +126,7 @@ const MainLayout = () => {
         </PageTitle>
         <Link to="/">
           <img
-            src="/public/assets/icons/logo-green.svg"
+            src="/assets/icons/logo-green.svg"
             alt="Logo"
             className="h-8 w-auto"
           />
@@ -147,7 +147,7 @@ const MainLayout = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             <img
-              src="/public/assets/icons/close.svg"
+              src="/assets/icons/close.svg"
               alt="Menu Icon"
               className="w-8 h-8"
             />

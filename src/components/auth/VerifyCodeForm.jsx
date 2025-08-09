@@ -74,7 +74,7 @@ const VerifyCodeForm = () => {
   return (
     <div className="verify-code-form flex flex-col items-center justify-center min-h-screen bg-white px-4">
       <img
-        src="/public/assets/icons/logo-green.svg"
+        src="/assets/icons/logo-green.svg"
         alt="لوگو"
         className="w-36 h-36 sm:w-36 sm:h-36 mb-10"
       />

@@ -65,7 +65,7 @@ const PlantDetection = () => {
 
       <div className="my-4">
         <img
-          src="/public/assets/images/plant-detection.png"
+          src="/assets/images/plant-detection.png"
           alt="Plant Example"
           className="rounded-lg shadow-md w-full max-w-sm"
         />

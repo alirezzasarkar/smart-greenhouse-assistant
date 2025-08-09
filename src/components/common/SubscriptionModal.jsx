@@ -20,7 +20,7 @@ const SubscriptionModal = ({ onAccept, onDecline }) => {
       <div className="bg-white rounded-2xl shadow-lg p-6 w-80 text-center">
         <div className="flex justify-center mb-4">
           <img
-            src="/public/assets/icons/logo-green.svg"
+            src="/assets/icons/logo-green.svg"
             alt="Logo"
             className="w-10 h-10"
           />

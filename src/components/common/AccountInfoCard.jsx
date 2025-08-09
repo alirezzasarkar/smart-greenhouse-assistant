@@ -9,7 +9,7 @@ const AccountInfoCard = () => {
     <>
       <div className="flex flex-col bg-menu p-4 rounded-2xl  mb-6">
         <img
-          src={image ? image : "/public/assets/icons/user.svg"}
+          src={image ? image : "/assets/icons/user.svg"}
           alt="User Avatar"
           className="w-16 h-16 rounded-full mx-auto mb-10"
         />

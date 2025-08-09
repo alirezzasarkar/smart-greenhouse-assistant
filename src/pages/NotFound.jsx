@@ -12,7 +12,7 @@ const NotFound = () => {
     <div className="flex flex-col items-center justify-between pt-30 overflow-hidden">
       <div className="flex flex-col items-center justify-center flex-grow overflow-auto">
         <img
-          src="/public/assets/icons/notfound.svg"
+          src="/assets/icons/notfound.svg"
           alt="404 Page Not Found Graphic"
           className="max-w-full h-auto"
         />

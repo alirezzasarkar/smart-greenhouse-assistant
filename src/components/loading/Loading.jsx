@@ -5,7 +5,7 @@ const Loading = () => {
   return (
     <div className="relative flex flex-col items-center justify-center h-screen bg-color px-4">
       <img
-        src="/public/assets/icons/logo.svg"
+        src="/assets/icons/logo.svg"
         alt="لوگو"
         className="w-40 h-40 mb-3 sm:w-40 sm:h-40"
       />

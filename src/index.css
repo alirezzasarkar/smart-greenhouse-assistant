@@ -2,12 +2,12 @@
 
 @font-face {
     font-family: 'IRANSans';
-    src: url('/public/assets/fonts/IRANSansX.woff2') format('woff2');
+    src: url('/assets/fonts/IRANSansX.woff2') format('woff2');
 }  
 
 @font-face {
     font-family: 'IRANSans-light';
-    src: url('/public/assets/fonts/IRANSansX-Light.woff2') format('woff2');
+    src: url('/assets/fonts/IRANSansX-Light.woff2') format('woff2');
 }  
 
 body {

@@ -19,21 +19,21 @@ const Onboarding = () => {
       title: " به دنیای سبز و هوشمند ما خوش آمدید🌿",
       subtitle:
         " در اینجا با بهره‌گیری از هوش مصنوعی، مراقبت از گیاهان ساده‌تر، دقیق‌تر و لذت‌بخش‌تر خواهد شد.",
-      imageSrc: "/public/assets/images/robot-smartphone.png",
+      imageSrc: "/assets/images/robot-smartphone.png",
       buttonText: "ادامه",
     },
     {
       title: "کافیست از گیاه خود عکس بگیرید،",
       subtitle:
         "ما با تحلیل تصویر، وضعیت سلامت آن را بررسی کرده و در صورت وجود مشکل، راه‌حل مناسب را پیشنهاد می‌دهیم.",
-      imageSrc: "/public/assets/images/robolt-planting.png",
+      imageSrc: "/assets/images/robolt-planting.png",
       buttonText: "ادامه",
     },
     {
       title: "پس بیایید آغاز کنیم 🌱",
       subtitle:
         "با ثبت نام در پلتفرم، یک همراه هوشمند و همیشه در دسترس برای مراقبت از گیاهانتان خواهید داشت.",
-      imageSrc: "/public/assets/images/robot-book.png",
+      imageSrc: "/assets/images/robot-book.png",
       buttonText: "شروع کن",
     },
   ];

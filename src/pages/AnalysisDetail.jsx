@@ -15,7 +15,7 @@ const formatDate = (isoDateStr) => {
 
 const AnalysisDetail = () => {
   const location = useLocation();
-  const { plant_name, created_at, result, answers } = location.state || {};
+  const { plant_name,image, created_at, result, answers } = location.state || {};
 
   const [loading, setLoading] = useState(false);
 
@@ -42,6 +42,8 @@ const AnalysisDetail = () => {
         تاریخ: {formatDate(created_at)}
       </p>
 
+      <img src={image} alt="تصویر گیاه" />
+      
       {plant_name && (
         <p className="text-sm text-gray-600 mb-4">
           <strong>نام گیاه:</strong> {plant_name}

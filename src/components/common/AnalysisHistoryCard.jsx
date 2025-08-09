@@ -5,7 +5,7 @@
 //   return (
 //     <div className="flex bg-white rounded-2xl shadow-gray-100 shadow-md p-3 py-5 gap-3">
 //       <img
-//         src="/public/assets/icons/plant.svg"
+//         src="/assets/icons/plant.svg"
 //         alt={title}
 //         className="w-6 h-6 object-cover"
 //       />
@@ -105,13 +105,13 @@ const AnalysisHistoryCard = ({
   return (
     <div className="flex bg-white rounded-2xl shadow-gray-100 shadow-md p-3 py-5 gap-3">
       <img
-        src="/public/assets/icons/plant.svg"
+        src="/assets/icons/plant.svg"
         alt={plant_name}
         className="w-6 h-6 object-cover"
       />
       <div className="flex-1 text-right">
-        <h3 className="font-bold text-base mb-1">
-          {plant_name || "بدون عنوان"}
+        <h3 className="font-bold text-base mb-1 line-clamp-1">
+          {plant_name || result || "بدون عنوان"}
         </h3>
 
         {hasAnswers ? (
@@ -127,7 +127,7 @@ const AnalysisHistoryCard = ({
           </div>
         ) : (
           <p className="text-xs text-gray-500 mb-2 line-clamp-2">
-            {desc || "توضیحی وارد نشده است."}
+            {desc || result || "توضیحی وارد نشده است."}
           </p>
         )}
 
@@ -135,7 +135,7 @@ const AnalysisHistoryCard = ({
           <span>{formatDate(created_at)}</span>
           <Link
             to={`/profile/analysis-history/analysis-detail/${id}`}
-            state={{ title, desc, created_at, answers, result }}
+            state={{ title, desc, created_at,image, answers, result }}
           >
             <button className="cursor-pointer px-4 py-1 bg-green-100 text-green-700 rounded-xl text-xs hover:bg-green-200 transition-colors">
               مشاهده جزئیات
