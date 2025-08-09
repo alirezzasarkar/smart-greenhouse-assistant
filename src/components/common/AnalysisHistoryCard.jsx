@@ -121,14 +121,14 @@ const AnalysisHistoryCard = ({
                 <strong>{field.label}:</strong> {field.value}
               </div>
             ))} */}
-            <p className="text-xs text-gray-500 mb-2 line-clamp-2">
+            <div className="text-xs text-gray-500 mb-2 line-clamp-2">
               {renderSummary()}
-            </p>
+            </div>
           </div>
         ) : (
-          <p className="text-xs text-gray-500 mb-2 line-clamp-2">
+          <div className="text-xs text-gray-500 mb-2 line-clamp-2">
             {desc || result || "توضیحی وارد نشده است."}
-          </p>
+          </div>
         )}
 
         <div className="flex items-center justify-between gap-2 text-xs text-gray-400 mt-2">
