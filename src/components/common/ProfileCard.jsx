@@ -21,7 +21,6 @@ const ProfileCard = () => {
             {remaining_days} روز مانده تا پایان اشتراک پایه
           </p>
         )}
-        <p className="text-sm text-gray-500">اشتراک ندارید</p>
       </div>
     </div>
   );
